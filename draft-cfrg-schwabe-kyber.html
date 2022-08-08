@@ -1274,7 +1274,15 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
             <p id="section-toc.1-1.14.1"><a href="#section-14" class="xref">14</a>. <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#section-15" class="xref">15</a>. <a href="#name-normative-references" class="xref">Normative References</a></p>
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="xref">15</a>. <a href="#name-references" class="xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.1">
+                <p id="section-toc.1-1.15.2.1.1"><a href="#section-15.1" class="xref">15.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.2">
+                <p id="section-toc.1-1.15.2.2.1"><a href="#section-15.2" class="xref">15.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
             <p id="section-toc.1-1.16.1"><a href="#appendix-A" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
@@ -1300,7 +1308,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
         </h3>
 <p id="section-1.1-1"><strong>NOTE</strong> This draft is not stable and does not (yet) match the final
 NIST standard expected in 2024. Currently it matches Kyber as submitted
-to round 3 of the NIST PQC process.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+to round 3 of the NIST PQC process. <span>[<a href="#KyberV302" class="xref">KyberV302</a>]</span><a href="#section-1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1358,8 +1366,8 @@ a seed <em>rho</em>.<a href="#section-3-8" class="pilcrow">¶</a></p>
 computed roughly as follows:<a href="#section-3-9" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3-10">
 <pre>
-c\_1 = Compress(A^T r + e\_1, d\_u)
-c\_2 = Compress(t^T r + e\_2 + Decompress(m, 1), d\_v)
+c_1 = Compress(A^T r + e_1, d_u)
+c_2 = Compress(t^T r + e_2 + Decompress(m, 1), d_v)
 </pre><a href="#section-3-10" class="pilcrow">¶</a>
 </div>
 <p id="section-3-11">where<a href="#section-3-11" class="pilcrow">¶</a></p>
@@ -1376,7 +1384,7 @@ and Decompress is such that Compress after Decompress does nothing and<a href="#
 <p id="section-3-14">To decrypt the ciphertext, one computes<a href="#section-3-14" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3-15">
 <pre>
-m = Compress(Decompress(c\_2, d\_v) - s^T Decompress(c\_1, d\_u), 1).
+m = Compress(Decompress(c_2, d_v) - s^T Decompress(c_1, d_u), 1).
 </pre><a href="#section-3-15" class="pilcrow">¶</a>
 </div>
 <p id="section-3-16">To define all these operations precisely, we first define the field
@@ -1485,7 +1493,7 @@ We will call them polynomials or elements interchangeably.<a href="#section-5-1"
 <p id="section-5-2">A tuple a = (a_0, ..., a_255) represents the polynomial<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5-3">
 <pre>
-a\_0 + a\_1 x + a\_2 x^2 + ... + a\_255 x^255.
+a_0 + a_1 x + a_2 x^2 + ... + a_255 x^255.
 </pre><a href="#section-5-3" class="pilcrow">¶</a>
 </div>
 <p id="section-5-4">With polynomial coefficients, vector and matrix indices, we will start
@@ -1503,7 +1511,7 @@ counting at zero.<a href="#section-5-4" class="pilcrow">¶</a></p>
 <p id="section-5.1.1-1">Addition of elements is componentwise. Thus<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1.1-2">
 <pre>
-(a\_0, ..., a\_255) +  (b\_0, ..., b\_255) = (a\_0 + b\_0, ..., a\_255 + b\_255)
+(a_0, ..., a_255) +  (b_0, ..., b_255) = (a_0 + b_0, ..., a_255 + b_255)
 </pre><a href="#section-5.1.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1.1-3">where addition in each component is computed modulo q.<a href="#section-5.1.1-3" class="pilcrow">¶</a></p>
@@ -1511,13 +1519,13 @@ counting at zero.<a href="#section-5-4" class="pilcrow">¶</a></p>
 that x^256=-1. To wit<a href="#section-5.1.1-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1.1-5">
 <pre>
-(a\_0, ..., a\_255) \* (b\_0, ..., b\_255)
-    = (a\_0 * b\_0 - a\_255 * b\_1 - ... - a\_1 * b\_255,
-       a\_0 * b\_1 + a\_1 * b\_0 - a\_255 * b\_2 - ... - a\_2 * b\_255,
+(a_0, ..., a_255) \* (b_0, ..., b_255)
+    = (a_0 * b_0 - a_255 * b_1 - ... - a_1 * b_255,
+       a_0 * b_1 + a_1 * b_0 - a_255 * b_2 - ... - a_2 * b_255,
 
             ...
 
-       a\_0 * b\_255 + ... + a\_255 * b\_0)
+       a_0 * b_255 + ... + a_255 * b_0)
 </pre><a href="#section-5.1.1-5" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1.1-6">We will not use this schoolbook multiplication to compute the product.
@@ -1627,18 +1635,18 @@ a |-&gt; ( a mod x^128 - zeta^64, a mod x^128 + zeta^64 ),
 for the first step we get:<a href="#section-5.1.3-17" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1.3-18">
 <pre>
-a |-&gt; (   a\_0 + zeta^64 a\_128,   a\_1 + zeta^64 a\_129,
+a |-&gt; (   a_0 + zeta^64 a_128,   a_1 + zeta^64 a_129,
          ...
-        a\_126 + zeta^64 a\_254, a\_127 + zeta^64 a\_255,
-          a\_0 - zeta^64 a\_128,   a\_1 - zeta^64 a\_129,
+        a_126 + zeta^64 a_254, a_127 + zeta^64 a_255,
+          a_0 - zeta^64 a_128,   a_1 - zeta^64 a_129,
          ...
-        a\_126 - zeta^64 a\_254, a\_127 - zeta^64 a\_255)
+        a_126 - zeta^64 a_254, a_127 - zeta^64 a_255)
 </pre><a href="#section-5.1.3-18" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1.3-19">We can see this as 128 applications of the linear map CT_64, where<a href="#section-5.1.3-19" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1.3-20">
 <pre>
-CT\_i: (a, b) |-&gt; (a + zeta^i b, a - zeta^i b)   modulo q
+CT_i: (a, b) |-&gt; (a + zeta^i b, a - zeta^i b)   modulo q
 </pre><a href="#section-5.1.3-20" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1.3-21">for the appropriate i in the following order, pictured in the case of n=16:<a href="#section-5.1.3-21" class="pilcrow">¶</a></p>
@@ -1671,7 +1679,7 @@ of zeta for the top and bottom row group respectively, and so on.<a href="#secti
 by the Gentleman-Sande butterfly:<a href="#section-5.1.3-24" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1.3-25">
 <pre>
-GS\_i: (a, b) |-&gt; ( (a+b)/2, zeta^-i (a-b)/2 )    modulo q
+GS_i: (a, b) |-&gt; ( (a+b)/2, zeta^-i (a-b)/2 )    modulo q
 </pre><a href="#section-5.1.3-25" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1.3-26">The inverse NTT can be computed by replacing CS_i by GS_i and flipping
@@ -1706,9 +1714,9 @@ and brv(91)=109.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">The NTT is a linear bijection R -&gt; R given by the matrix:<a href="#section-6-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6-4">
 <pre>
-              [ zeta^{ (2 brv(i &gt;&gt; 1) + 1) j }     if i=j modulo 2
-(NTT)\_{ij} = [
-              [ 0                                  otherwise
+             [ zeta^{ (2 brv(i &gt;&gt; 1) + 1) j }     if i=j modulo 2
+(NTT)_{ij} = [
+             [ 0                                  otherwise
 </pre><a href="#section-6-4" class="pilcrow">¶</a>
 </div>
 <p id="section-6-5">Its inverse is called the InvNTT.<a href="#section-6-5" class="pilcrow">¶</a></p>
@@ -1822,7 +1830,7 @@ Compress(v, d)_i = Compress(v_i, d)
 is a list of bits of length 8s, defined by<a href="#section-9.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9.1-2">
 <pre>
-OctetsToBits(a)\_i = ((a\_(i&gt;&gt;3)) &gt;&gt; (i umod 8)) umod 2.
+OctetsToBits(a)_i = ((a_(i&gt;&gt;3)) &gt;&gt; (i umod 8)) umod 2.
 </pre><a href="#section-9.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-9.1-3">Example:<a href="#section-9.1-3" class="pilcrow">¶</a></p>
@@ -1897,7 +1905,7 @@ from an octet stream (XOF) using rejection sampling as follows.<a href="#section
 interpreted as two 12-bit unsigned integers d_1, d_2 via<a href="#section-9.3.1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9.3.1-3">
 <pre>
-d\_1 + d\_2 2^12 = b\_0 + b\_1 2^8 + b\_2 2^16
+d_1 + d_2 2^12 = b_0 + b_1 2^8 + b_2 2^16
 </pre><a href="#section-9.3.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-9.3.1-4">This creates a stream of 12-bit <code>d</code>s. Of these, the elements &gt;= q are
@@ -1956,8 +1964,8 @@ deterministically  as follows.<a href="#section-9.3.2-1" class="pilcrow">¶</a><
 <p id="section-9.3.2-2">An octet array a of length 2*eta is converted to a polynomial CBD(a, eta)<a href="#section-9.3.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9.3.2-3">
 <pre>
-CBD(a, eta)\_i = b\_{2i eta} + b\_{2i eta + 1} + ... + b\_{2i eta + eta-1}
-              - b\_{2i eta + eta} + ... + b\_{2i eta + 2eta - 1},
+CBD(a, eta)_i = b_{2i eta} + b_{2i eta + 1} + ... + b_{2i eta + eta-1}
+              - b_{2i eta + eta} + ... + b_{2i eta + 2eta - 1},
 </pre><a href="#section-9.3.2-3" class="pilcrow">¶</a>
 </div>
 <p id="section-9.3.2-4">where b = OctetsToBits(a).<a href="#section-9.3.2-4" class="pilcrow">¶</a></p>
@@ -2492,19 +2500,35 @@ returns a shared secret as follows.<a href="#section-11.3-1" class="pilcrow">¶<
 </section>
 </div>
 <section id="section-15">
-      <h2 id="name-normative-references">
-<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      <h2 id="name-references">
+<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<section id="section-15.1">
+        <h3 id="name-normative-references">
+<a href="#section-15.1" class="section-number selfRef">15.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
+</section>
+<section id="section-15.2">
+        <h3 id="name-informative-references">
+<a href="#section-15.2" class="section-number selfRef">15.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="KyberV302">[KyberV302]</dt>
+      <dd>
+<span class="refAuthor">Avanzi, R.</span>, <span class="refAuthor">Bos, J.</span>, <span class="refAuthor">Ducas, L.</span>, <span class="refAuthor">Kiltz, E.</span>, <span class="refAuthor">Lepoint, T.</span>, <span class="refAuthor">Lyubashevsky, V.</span>, <span class="refAuthor">Schanck, J.</span>, <span class="refAuthor">Schwabe, P.</span>, <span class="refAuthor">Seiler, G.</span>, and <span class="refAuthor">D. Stehle</span>, <span class="refTitle">"CRYSTALS-Kyber, Algorithm Specification And Supporting Documentation (version 3.02)"</span>, <time datetime="2021" class="refDate">2021</time>, <span>&lt;<a href="https://pq-crystals.org/kyber/data/kyber-specification-round3-20210804.pdf">https://pq-crystals.org/kyber/data/kyber-specification-round3-20210804.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
 </section>
 <div id="acknowledgments">
 <section id="appendix-A">
