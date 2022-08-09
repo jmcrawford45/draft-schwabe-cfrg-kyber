@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-07-28T00:54:45.369831+00:00",
+  "timestamp": "2022-08-09T00:57:18.393747+00:00",
   "repo": "bwesterb/draft-schwabe-cfrg-kyber",
   "labels": [
     {
@@ -121,7 +121,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2022-07-25T19:18:44Z",
-      "updatedAt": "2022-07-26T10:08:31Z",
+      "updatedAt": "2022-08-08T10:39:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -130,6 +130,13 @@
           "body": "_draft-ietf-tcpm-rfc8312bis_ uses \u03b2.",
           "createdAt": "2022-07-26T10:08:31Z",
           "updatedAt": "2022-07-26T10:08:31Z"
+        },
+        {
+          "author": "bwesterb",
+          "authorAssociation": "OWNER",
+          "body": "[rfc7997](https://www.rfc-editor.org/rfc/rfc7997.txt) doesn't seem to allow it.",
+          "createdAt": "2022-08-08T10:39:46Z",
+          "updatedAt": "2022-08-08T10:39:46Z"
         }
       ]
     },
@@ -378,15 +385,15 @@
       "id": "I_kwDOHnJoss5Og_Fs",
       "title": "Finish specification of Kyber.CPAPKE and Kyber itself",
       "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/19",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bwesterb",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2022-07-25T19:28:00Z",
-      "updatedAt": "2022-07-25T19:28:00Z",
-      "closedAt": null,
+      "updatedAt": "2022-08-08T13:21:43Z",
+      "closedAt": "2022-08-08T13:21:43Z",
       "comments": []
     },
     {
@@ -403,6 +410,38 @@
       "createdAt": "2022-07-25T19:28:49Z",
       "updatedAt": "2022-07-25T19:28:49Z",
       "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOHnJoss5PYjRE",
+      "title": "Add warnings about using Kyber.CPAPKE directly",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/21",
+      "state": "OPEN",
+      "author": "bwesterb",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-08-08T12:58:21Z",
+      "updatedAt": "2022-08-08T12:58:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 22,
+      "id": "I_kwDOHnJoss5PYjdu",
+      "title": "Remove superfluous slashes",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/22",
+      "state": "CLOSED",
+      "author": "bwesterb",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "In displays we do not need to escape `_` as `\\_`.",
+      "createdAt": "2022-08-08T12:59:02Z",
+      "updatedAt": "2022-08-08T13:32:51Z",
+      "closedAt": "2022-08-08T13:32:51Z",
       "comments": []
     }
   ],
