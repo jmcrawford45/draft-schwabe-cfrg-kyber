@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-08-09T00:57:18.393747+00:00",
+  "timestamp": "2022-08-11T00:52:08.555896+00:00",
   "repo": "bwesterb/draft-schwabe-cfrg-kyber",
   "labels": [
     {
@@ -442,6 +442,22 @@
       "createdAt": "2022-08-08T12:59:02Z",
       "updatedAt": "2022-08-08T13:32:51Z",
       "closedAt": "2022-08-08T13:32:51Z",
+      "comments": []
+    },
+    {
+      "number": 23,
+      "id": "I_kwDOHnJoss5PgVWn",
+      "title": "Should we define the norm?",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/23",
+      "state": "OPEN",
+      "author": "bwesterb",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "We don't really use the norm in describing the algorithm.",
+      "createdAt": "2022-08-09T23:08:59Z",
+      "updatedAt": "2022-08-09T23:08:59Z",
+      "closedAt": null,
       "comments": []
     }
   ],
