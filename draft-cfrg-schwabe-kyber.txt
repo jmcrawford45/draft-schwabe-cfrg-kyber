@@ -2,11 +2,11 @@
 
 
 
-Network Working Group                                         P. Schwabe
+None                                                          P. Schwabe
 Internet-Draft                              MPI-SPI & Radboud University
 Intended status: Informational                             B. Westerbaan
-Expires: 9 February 2023                                      Cloudflare
-                                                           8 August 2022
+Expires: 23 February 2023                                     Cloudflare
+                                                          22 August 2022
 
 
                          Kyber Post-Quantum KEM
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 February 2023.
+   This Internet-Draft will expire on 23 February 2023.
 
 Copyright Notice
 
