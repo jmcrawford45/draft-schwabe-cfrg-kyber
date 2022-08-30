@@ -778,9 +778,9 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
    1.  Split seed into
 
-       1.  A 32-octet z
+       1.  A 32-octet cpaSeed
 
-       2.  A 32-octet cpaSeed
+       2.  A 32-octet z
 
    2.  Compute
 
