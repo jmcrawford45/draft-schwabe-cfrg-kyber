@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-08-11T00:52:08.555896+00:00",
+  "timestamp": "2022-08-30T01:03:12.051663+00:00",
   "repo": "bwesterb/draft-schwabe-cfrg-kyber",
   "labels": [
     {
@@ -296,9 +296,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2022-07-25T19:25:19Z",
-      "updatedAt": "2022-07-25T19:25:19Z",
+      "updatedAt": "2022-08-29T15:35:22Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "bwesterb",
+          "authorAssociation": "OWNER",
+          "body": "Also mention that all these primitives are essentially the same.",
+          "createdAt": "2022-08-29T15:35:22Z",
+          "updatedAt": "2022-08-29T15:35:22Z"
+        }
+      ]
     },
     {
       "number": 14,
@@ -496,6 +504,32 @@
           "updatedAt": "2022-07-25T14:53:50Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOHnJoss49_tsz",
+      "title": "Add NIST KAT tests",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/pull/24",
+      "state": "OPEN",
+      "author": "jschanck",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This adds KAT tests to kyber_test.py. I found that the tests failed because kyber.py uses shake128 for `KDF`. So this PR also aligns kyber.py with the spec's use of shake256.\r\n\r\nThe contents of `nistkat.py` were produced by applying the following patch to [PQCgenKAT_kem.c](https://github.com/pq-crystals/kyber/blob/master/ref/PQCgenKAT_kem.c).\r\n\r\n```\r\ndiff --git a/ref/PQCgenKAT_kem.c b/ref/PQCgenKAT_kem.c\r\nindex d24fa50..edc87fc 100644\r\n--- a/ref/PQCgenKAT_kem.c\r\n+++ b/ref/PQCgenKAT_kem.c\r\n@@ -21,6 +21,7 @@\r\n int\t\tFindMarker(FILE *infile, const char *marker);\r\n int\t\tReadHex(FILE *infile, unsigned char *A, int Length, char *str);\r\n void\tfprintBstr(FILE *fp, char *S, unsigned char *A, unsigned long long L);\r\n+void\tfprintBstr2(FILE *fp, char *S, unsigned char *A, unsigned long long L);\r\n \r\n int\r\n main()\r\n@@ -29,6 +30,7 @@ main()\r\n     FILE                *fp_req, *fp_rsp;\r\n     unsigned char       seed[48];\r\n     unsigned char       entropy_input[48];\r\n+    unsigned char       drbg_output[64];\r\n     unsigned char       ct[CRYPTO_CIPHERTEXTBYTES], ss[CRYPTO_BYTES], ss1[CRYPTO_BYTES];\r\n     int                 count;\r\n     int                 done;\r\n@@ -68,7 +70,7 @@ main()\r\n         return KAT_FILE_OPEN_ERROR;\r\n     }\r\n \r\n-    fprintf(fp_rsp, \"# %s\\n\\n\", CRYPTO_ALGNAME);\r\n+    fprintf(fp_rsp, \"%s_nistkats = [\\n\", CRYPTO_ALGNAME);\r\n     done = 0;\r\n     do {\r\n         if ( FindMarker(fp_req, \"count = \") )\r\n@@ -77,13 +79,21 @@ main()\r\n             done = 1;\r\n             break;\r\n         }\r\n-        fprintf(fp_rsp, \"count = %d\\n\", count);\r\n+        fprintf(fp_rsp, \"nistkat(\\n\");\r\n+        fprintf(fp_rsp, \"count = %d,\\n\", count);\r\n \r\n         if ( !ReadHex(fp_req, seed, 48, \"seed = \") ) {\r\n             printf(\"ERROR: unable to read 'seed' from <%s>\\n\", fn_req);\r\n             return KAT_DATA_ERROR;\r\n         }\r\n-        fprintBstr(fp_rsp, \"seed = \", seed, 48);\r\n+        fprintBstr2(fp_rsp, \"seed = \", seed, 48);\r\n+\r\n+        randombytes_init(seed, NULL, 256);\r\n+        randombytes(drbg_output, 32);\r\n+        randombytes(drbg_output+32, 32);\r\n+        fprintBstr2(fp_rsp, \"rand1 = \", drbg_output, 64);\r\n+        randombytes(drbg_output, 32);\r\n+        fprintBstr2(fp_rsp, \"rand2 = \", drbg_output, 32);\r\n \r\n         randombytes_init(seed, NULL, 256);\r\n \r\n@@ -92,17 +102,17 @@ main()\r\n             printf(\"crypto_kem_keypair returned <%d>\\n\", ret_val);\r\n             return KAT_CRYPTO_FAILURE;\r\n         }\r\n-        fprintBstr(fp_rsp, \"pk = \", pk, CRYPTO_PUBLICKEYBYTES);\r\n-        fprintBstr(fp_rsp, \"sk = \", sk, CRYPTO_SECRETKEYBYTES);\r\n+        fprintBstr2(fp_rsp, \"pk = \", pk, CRYPTO_PUBLICKEYBYTES);\r\n+        fprintBstr2(fp_rsp, \"sk = \", sk, CRYPTO_SECRETKEYBYTES);\r\n \r\n         if ( (ret_val = crypto_kem_enc(ct, ss, pk)) != 0) {\r\n             printf(\"crypto_kem_enc returned <%d>\\n\", ret_val);\r\n             return KAT_CRYPTO_FAILURE;\r\n         }\r\n-        fprintBstr(fp_rsp, \"ct = \", ct, CRYPTO_CIPHERTEXTBYTES);\r\n-        fprintBstr(fp_rsp, \"ss = \", ss, CRYPTO_BYTES);\r\n+        fprintBstr2(fp_rsp, \"ct = \", ct, CRYPTO_CIPHERTEXTBYTES);\r\n+        fprintBstr2(fp_rsp, \"ss = \", ss, CRYPTO_BYTES);\r\n \r\n-        fprintf(fp_rsp, \"\\n\");\r\n+        fprintf(fp_rsp, \"),\\n\");\r\n \r\n         if ( (ret_val = crypto_kem_dec(ss1, ct, sk)) != 0) {\r\n             printf(\"crypto_kem_dec returned <%d>\\n\", ret_val);\r\n@@ -115,6 +125,7 @@ main()\r\n         }\r\n \r\n     } while ( !done );\r\n+    fprintf(fp_rsp, \"]\\n\");\r\n \r\n     fclose(fp_req);\r\n     fclose(fp_rsp);\r\n@@ -230,3 +241,20 @@ fprintBstr(FILE *fp, char *S, unsigned char *A, unsigned long long L)\r\n \tfprintf(fp, \"\\n\");\r\n }\r\n \r\n+void\r\n+fprintBstr2(FILE *fp, char *S, unsigned char *A, unsigned long long L)\r\n+{\r\n+\tunsigned long long  i;\r\n+\r\n+\tfprintf(fp, \"%s\", S);\r\n+\tfprintf(fp, \"b\\\"\", S);\r\n+\r\n+\tfor ( i=0; i<L; i++ )\r\n+\t\tfprintf(fp, \"\\\\x%02X\", A[i]);\r\n+\r\n+\tif ( L == 0 )\r\n+\t\tfprintf(fp, \"\\\\x00\");\r\n+\r\n+\tfprintf(fp, \"\\\",\\n\");\r\n+}\r\n+\r\n```",
+      "createdAt": "2022-08-29T19:26:34Z",
+      "updatedAt": "2022-08-29T19:26:39Z",
+      "baseRepository": "bwesterb/draft-schwabe-cfrg-kyber",
+      "baseRefName": "main",
+      "baseRefOid": "04180dc05ab6568fa1668ec23c9b163e2cafed58",
+      "headRepository": "bwesterb/draft-schwabe-cfrg-kyber",
+      "headRefName": "nistkat",
+      "headRefOid": "a5d366f454f2d58c1cc4a44c73ea72adc5106694",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
