@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-08-30T01:03:12.051663+00:00",
+  "timestamp": "2022-09-01T00:55:21.476675+00:00",
   "repo": "bwesterb/draft-schwabe-cfrg-kyber",
   "labels": [
     {
@@ -145,15 +145,15 @@
       "id": "I_kwDOHnJoss5Og8-z",
       "title": "Check NIST test vectors against Python specification",
       "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/4",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bwesterb",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2022-07-25T19:19:19Z",
-      "updatedAt": "2022-07-25T19:19:19Z",
-      "closedAt": null,
+      "updatedAt": "2022-08-30T13:06:29Z",
+      "closedAt": "2022-08-30T13:06:29Z",
       "comments": []
     },
     {
@@ -241,15 +241,15 @@
       "id": "I_kwDOHnJoss5Og-Ln",
       "title": "Add test vectors",
       "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/10",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bwesterb",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2022-07-25T19:24:20Z",
-      "updatedAt": "2022-07-25T19:24:20Z",
-      "closedAt": null,
+      "updatedAt": "2022-08-30T13:07:58Z",
+      "closedAt": "2022-08-30T13:07:58Z",
       "comments": []
     },
     {
@@ -311,7 +311,7 @@
     {
       "number": 14,
       "id": "I_kwDOHnJoss5Og-ek",
-      "title": "Insert kyber.py into rfc",
+      "title": "Insert kyber.py into rfc automatically",
       "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/14",
       "state": "OPEN",
       "author": "bwesterb",
@@ -320,7 +320,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2022-07-25T19:25:36Z",
-      "updatedAt": "2022-07-25T19:25:36Z",
+      "updatedAt": "2022-08-30T13:08:16Z",
       "closedAt": null,
       "comments": []
     },
@@ -432,9 +432,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2022-08-08T12:58:21Z",
-      "updatedAt": "2022-08-08T12:58:21Z",
+      "updatedAt": "2022-08-30T17:52:56Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jschanck",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I would avoid defining the CPA PKE at all in this document. Specifically, I would inline `CPAPKE_KeyGen` and `CPAPKE_Dec` into `KeyGen` and `Dec`. I would then rename `CPAPKE_Enc` to something like `InnerEnc` and describe it as a helper function for code that is shared between `Enc` and `Dec`.",
+          "createdAt": "2022-08-30T17:52:56Z",
+          "updatedAt": "2022-08-30T17:52:56Z"
+        }
+      ]
     },
     {
       "number": 22,
@@ -467,6 +475,84 @@
       "updatedAt": "2022-08-09T23:08:59Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 25,
+      "id": "I_kwDOHnJoss5QzwJ_",
+      "title": "Run Python tests in CI",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/25",
+      "state": "CLOSED",
+      "author": "bwesterb",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-08-30T13:06:49Z",
+      "updatedAt": "2022-08-30T13:28:48Z",
+      "closedAt": "2022-08-30T13:28:48Z",
+      "comments": []
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOHnJoss5Q1KaR",
+      "title": "Give a reference implementation of `cmov` and use it in `Dec`",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/27",
+      "state": "OPEN",
+      "author": "jschanck",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-08-30T17:54:35Z",
+      "updatedAt": "2022-08-31T19:42:33Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bwesterb",
+          "authorAssociation": "OWNER",
+          "body": "It is very hard to ensure data-independent constant-time operations in Python. It can be done, but it will make the specification less readable. To begin, we can't use the plain `int` type.\r\n\r\nMy preference is not to bother with it in `kyber.py`: if we'd use a `cmov` then we would be suggesting that the rest is constant-time as well, which it most definitely is not.",
+          "createdAt": "2022-08-31T08:57:44Z",
+          "updatedAt": "2022-08-31T08:58:59Z"
+        },
+        {
+          "author": "jschanck",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Yeah I wouldn't expect it to be constant time in python. My issue is that\r\n```python\r\n    if ct == ct2: # NOTE <- in production this must be done in constant time!\r\n        return KDF(Kbar2 + H(ct))\r\n    return KDF(z + H(ct))\r\n```\r\nonly says that the comparison must be constant time. An implementer might skip the computation of `KDF(Kbar2 + H(ct))` when the branch is not taken. (The wording in the spec is fine.) \r\n\r\nSo I would write something like\r\n```python\r\n    return constant_time_select(ct, ct2, KDF(Kbar2 + H(ct)), KDF(z + H(ct)))\r\n\r\ndef constant_time_select(a, b, x, y):\r\n    # WARNING! This implementation is insecure.\r\n    # Examples of safer implementations in several languages can be found in [XXX].\r\n    return x if a == b else y\r\n```\r\n\r\n",
+          "createdAt": "2022-08-31T19:42:32Z",
+          "updatedAt": "2022-08-31T19:42:32Z"
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "id": "I_kwDOHnJoss5Q1VPp",
+      "title": "Remove the `seed` inputs to `KeyGen` and `Enc`",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/28",
+      "state": "OPEN",
+      "author": "jschanck",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-08-30T18:39:05Z",
+      "updatedAt": "2022-08-31T19:24:37Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "bwesterb",
+          "authorAssociation": "OWNER",
+          "body": "There are two reasons why I like having the seeds explicit:\r\n\r\n1. First, it makes it easy to use kyber.py to test other implementations. In the end, it's a specification, not an implementation.\r\n\r\n2. If KEMTLS gets traction, it's convenient to be able to store the short seed instead of the full private key.\r\nWhy do you prefer the randombytes() style?\r\n\r\n(Note that the explicit seeds are used both in kyber.py and the specification itself.)",
+          "createdAt": "2022-08-31T08:55:43Z",
+          "updatedAt": "2022-08-31T08:55:43Z"
+        },
+        {
+          "author": "jschanck",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> having the seeds explicit [...] makes it easy to use kyber.py to test other implementations.\r\n\r\nOther implementations are likely to use NIST's API, which will not use explicit seeds. So I'm not sure I see a benefit.\r\n\r\nAll implementations are likely to test against the NIST KATs. So they will need to know how various values of \"seed\" are related to the `RandomBytes` calls in NIST's standard. The current spec does not make that obvious. E.g. the phrasing\r\n>    Split seed into 2.\r\n>       - A 32-octet cpaSeed\r\n>       - A 32-octet z\r\n\r\nobscures the fact that `seed` must be the concatenation of two sequential `RandomBytes(32)` calls for the purpose of checking the KATs.\r\n\r\n>  Why do you prefer the randombytes() style?\r\n\r\nThere's a risk that explicit seeds will be misused. We can add warnings to the text (which readers might miss...), or we can simply write `RandomBytes(32)` when we mean 32 random bytes. After all, it's a spec, not an implementation ;).",
+          "createdAt": "2022-08-31T19:24:37Z",
+          "updatedAt": "2022-08-31T19:24:37Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -511,20 +597,82 @@
       "id": "PR_kwDOHnJoss49_tsz",
       "title": "Add NIST KAT tests",
       "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/pull/24",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jschanck",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "This adds KAT tests to kyber_test.py. I found that the tests failed because kyber.py uses shake128 for `KDF`. So this PR also aligns kyber.py with the spec's use of shake256.\r\n\r\nThe contents of `nistkat.py` were produced by applying the following patch to [PQCgenKAT_kem.c](https://github.com/pq-crystals/kyber/blob/master/ref/PQCgenKAT_kem.c).\r\n\r\n```\r\ndiff --git a/ref/PQCgenKAT_kem.c b/ref/PQCgenKAT_kem.c\r\nindex d24fa50..edc87fc 100644\r\n--- a/ref/PQCgenKAT_kem.c\r\n+++ b/ref/PQCgenKAT_kem.c\r\n@@ -21,6 +21,7 @@\r\n int\t\tFindMarker(FILE *infile, const char *marker);\r\n int\t\tReadHex(FILE *infile, unsigned char *A, int Length, char *str);\r\n void\tfprintBstr(FILE *fp, char *S, unsigned char *A, unsigned long long L);\r\n+void\tfprintBstr2(FILE *fp, char *S, unsigned char *A, unsigned long long L);\r\n \r\n int\r\n main()\r\n@@ -29,6 +30,7 @@ main()\r\n     FILE                *fp_req, *fp_rsp;\r\n     unsigned char       seed[48];\r\n     unsigned char       entropy_input[48];\r\n+    unsigned char       drbg_output[64];\r\n     unsigned char       ct[CRYPTO_CIPHERTEXTBYTES], ss[CRYPTO_BYTES], ss1[CRYPTO_BYTES];\r\n     int                 count;\r\n     int                 done;\r\n@@ -68,7 +70,7 @@ main()\r\n         return KAT_FILE_OPEN_ERROR;\r\n     }\r\n \r\n-    fprintf(fp_rsp, \"# %s\\n\\n\", CRYPTO_ALGNAME);\r\n+    fprintf(fp_rsp, \"%s_nistkats = [\\n\", CRYPTO_ALGNAME);\r\n     done = 0;\r\n     do {\r\n         if ( FindMarker(fp_req, \"count = \") )\r\n@@ -77,13 +79,21 @@ main()\r\n             done = 1;\r\n             break;\r\n         }\r\n-        fprintf(fp_rsp, \"count = %d\\n\", count);\r\n+        fprintf(fp_rsp, \"nistkat(\\n\");\r\n+        fprintf(fp_rsp, \"count = %d,\\n\", count);\r\n \r\n         if ( !ReadHex(fp_req, seed, 48, \"seed = \") ) {\r\n             printf(\"ERROR: unable to read 'seed' from <%s>\\n\", fn_req);\r\n             return KAT_DATA_ERROR;\r\n         }\r\n-        fprintBstr(fp_rsp, \"seed = \", seed, 48);\r\n+        fprintBstr2(fp_rsp, \"seed = \", seed, 48);\r\n+\r\n+        randombytes_init(seed, NULL, 256);\r\n+        randombytes(drbg_output, 32);\r\n+        randombytes(drbg_output+32, 32);\r\n+        fprintBstr2(fp_rsp, \"rand1 = \", drbg_output, 64);\r\n+        randombytes(drbg_output, 32);\r\n+        fprintBstr2(fp_rsp, \"rand2 = \", drbg_output, 32);\r\n \r\n         randombytes_init(seed, NULL, 256);\r\n \r\n@@ -92,17 +102,17 @@ main()\r\n             printf(\"crypto_kem_keypair returned <%d>\\n\", ret_val);\r\n             return KAT_CRYPTO_FAILURE;\r\n         }\r\n-        fprintBstr(fp_rsp, \"pk = \", pk, CRYPTO_PUBLICKEYBYTES);\r\n-        fprintBstr(fp_rsp, \"sk = \", sk, CRYPTO_SECRETKEYBYTES);\r\n+        fprintBstr2(fp_rsp, \"pk = \", pk, CRYPTO_PUBLICKEYBYTES);\r\n+        fprintBstr2(fp_rsp, \"sk = \", sk, CRYPTO_SECRETKEYBYTES);\r\n \r\n         if ( (ret_val = crypto_kem_enc(ct, ss, pk)) != 0) {\r\n             printf(\"crypto_kem_enc returned <%d>\\n\", ret_val);\r\n             return KAT_CRYPTO_FAILURE;\r\n         }\r\n-        fprintBstr(fp_rsp, \"ct = \", ct, CRYPTO_CIPHERTEXTBYTES);\r\n-        fprintBstr(fp_rsp, \"ss = \", ss, CRYPTO_BYTES);\r\n+        fprintBstr2(fp_rsp, \"ct = \", ct, CRYPTO_CIPHERTEXTBYTES);\r\n+        fprintBstr2(fp_rsp, \"ss = \", ss, CRYPTO_BYTES);\r\n \r\n-        fprintf(fp_rsp, \"\\n\");\r\n+        fprintf(fp_rsp, \"),\\n\");\r\n \r\n         if ( (ret_val = crypto_kem_dec(ss1, ct, sk)) != 0) {\r\n             printf(\"crypto_kem_dec returned <%d>\\n\", ret_val);\r\n@@ -115,6 +125,7 @@ main()\r\n         }\r\n \r\n     } while ( !done );\r\n+    fprintf(fp_rsp, \"]\\n\");\r\n \r\n     fclose(fp_req);\r\n     fclose(fp_rsp);\r\n@@ -230,3 +241,20 @@ fprintBstr(FILE *fp, char *S, unsigned char *A, unsigned long long L)\r\n \tfprintf(fp, \"\\n\");\r\n }\r\n \r\n+void\r\n+fprintBstr2(FILE *fp, char *S, unsigned char *A, unsigned long long L)\r\n+{\r\n+\tunsigned long long  i;\r\n+\r\n+\tfprintf(fp, \"%s\", S);\r\n+\tfprintf(fp, \"b\\\"\", S);\r\n+\r\n+\tfor ( i=0; i<L; i++ )\r\n+\t\tfprintf(fp, \"\\\\x%02X\", A[i]);\r\n+\r\n+\tif ( L == 0 )\r\n+\t\tfprintf(fp, \"\\\\x00\");\r\n+\r\n+\tfprintf(fp, \"\\\",\\n\");\r\n+}\r\n+\r\n```",
       "createdAt": "2022-08-29T19:26:34Z",
-      "updatedAt": "2022-08-29T19:26:39Z",
+      "updatedAt": "2022-08-30T13:07:21Z",
       "baseRepository": "bwesterb/draft-schwabe-cfrg-kyber",
       "baseRefName": "main",
       "baseRefOid": "04180dc05ab6568fa1668ec23c9b163e2cafed58",
       "headRepository": "bwesterb/draft-schwabe-cfrg-kyber",
       "headRefName": "nistkat",
-      "headRefOid": "a5d366f454f2d58c1cc4a44c73ea72adc5106694",
+      "headRefOid": "06bcbb6e12b352f275c00393079faa12b1a248a4",
+      "closedAt": "2022-08-30T13:07:21Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bwesterb",
+          "authorAssociation": "OWNER",
+          "body": "Thanks for spotting this. I wrote the NIST DRBG in Python so that we don't have to include the big KAT files.\r\n\r\nhttps://github.com/bwesterb/draft-schwabe-cfrg-kyber/commit/a302ee805a17dd0f24770add109ee6b41fdb3c8a",
+          "createdAt": "2022-08-30T13:04:47Z",
+          "updatedAt": "2022-08-30T13:07:18Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOHnJoss4-DBUE",
+      "title": "Test CI tests",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/pull/26",
+      "state": "MERGED",
+      "author": "bwesterb",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-08-30T13:15:38Z",
+      "updatedAt": "2022-08-30T13:28:51Z",
+      "baseRepository": "bwesterb/draft-schwabe-cfrg-kyber",
+      "baseRefName": "main",
+      "baseRefOid": "81c5f8580f4749ea568e183073f91b1ca64398a0",
+      "headRepository": "bwesterb/draft-schwabe-cfrg-kyber",
+      "headRefName": "tests",
+      "headRefOid": "030453ed51d9b775849ac91a86a2724e9b9fc54d",
+      "closedAt": "2022-08-30T13:28:46Z",
+      "mergedAt": "2022-08-30T13:28:46Z",
+      "mergedBy": "bwesterb",
+      "mergeCommit": {
+        "oid": "4580f0b5f0a47b50a10349a0b783cfd57a0ec9dd"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDOHnJoss4-EX-3",
+      "title": "Remove the seed inputs to KeyGen and Enc",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/pull/29",
+      "state": "OPEN",
+      "author": "jschanck",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #28 ",
+      "createdAt": "2022-08-30T18:39:54Z",
+      "updatedAt": "2022-08-31T08:55:29Z",
+      "baseRepository": "bwesterb/draft-schwabe-cfrg-kyber",
+      "baseRefName": "main",
+      "baseRefOid": "e80e12b950236e89b28df02847dc0b624d1ec88d",
+      "headRepository": "bwesterb/draft-schwabe-cfrg-kyber",
+      "headRefName": "remove-seed-params",
+      "headRefOid": "d7a8688c7e5565e6a022ed59041544c4a5883200",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
