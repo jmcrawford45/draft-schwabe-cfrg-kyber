@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-09-01T00:55:21.476675+00:00",
+  "timestamp": "2022-09-04T00:56:44.126671+00:00",
   "repo": "bwesterb/draft-schwabe-cfrg-kyber",
   "labels": [
     {
@@ -24,14 +24,14 @@
       "color": "a2eeef"
     },
     {
-      "name": "help wanted",
-      "description": "Extra attention is needed",
-      "color": "008672"
-    },
-    {
       "name": "good first issue",
       "description": "Good for newcomers",
       "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
     },
     {
       "name": "invalid",
@@ -504,7 +504,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2022-08-30T17:54:35Z",
-      "updatedAt": "2022-08-31T19:42:33Z",
+      "updatedAt": "2022-09-01T12:54:07Z",
       "closedAt": null,
       "comments": [
         {
@@ -520,6 +520,20 @@
           "body": "Yeah I wouldn't expect it to be constant time in python. My issue is that\r\n```python\r\n    if ct == ct2: # NOTE <- in production this must be done in constant time!\r\n        return KDF(Kbar2 + H(ct))\r\n    return KDF(z + H(ct))\r\n```\r\nonly says that the comparison must be constant time. An implementer might skip the computation of `KDF(Kbar2 + H(ct))` when the branch is not taken. (The wording in the spec is fine.) \r\n\r\nSo I would write something like\r\n```python\r\n    return constant_time_select(ct, ct2, KDF(Kbar2 + H(ct)), KDF(z + H(ct)))\r\n\r\ndef constant_time_select(a, b, x, y):\r\n    # WARNING! This implementation is insecure.\r\n    # Examples of safer implementations in several languages can be found in [XXX].\r\n    return x if a == b else y\r\n```\r\n\r\n",
           "createdAt": "2022-08-31T19:42:32Z",
           "updatedAt": "2022-08-31T19:42:32Z"
+        },
+        {
+          "author": "bwesterb",
+          "authorAssociation": "OWNER",
+          "body": "I like your suggestion.",
+          "createdAt": "2022-09-01T12:45:31Z",
+          "updatedAt": "2022-09-01T12:45:31Z"
+        },
+        {
+          "author": "bwesterb",
+          "authorAssociation": "OWNER",
+          "body": "Still needs a reference.",
+          "createdAt": "2022-09-01T12:54:07Z",
+          "updatedAt": "2022-09-01T12:54:07Z"
         }
       ]
     },
@@ -535,7 +549,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2022-08-30T18:39:05Z",
-      "updatedAt": "2022-08-31T19:24:37Z",
+      "updatedAt": "2022-09-01T12:44:33Z",
       "closedAt": null,
       "comments": [
         {
@@ -551,8 +565,31 @@
           "body": "> having the seeds explicit [...] makes it easy to use kyber.py to test other implementations.\r\n\r\nOther implementations are likely to use NIST's API, which will not use explicit seeds. So I'm not sure I see a benefit.\r\n\r\nAll implementations are likely to test against the NIST KATs. So they will need to know how various values of \"seed\" are related to the `RandomBytes` calls in NIST's standard. The current spec does not make that obvious. E.g. the phrasing\r\n>    Split seed into 2.\r\n>       - A 32-octet cpaSeed\r\n>       - A 32-octet z\r\n\r\nobscures the fact that `seed` must be the concatenation of two sequential `RandomBytes(32)` calls for the purpose of checking the KATs.\r\n\r\n>  Why do you prefer the randombytes() style?\r\n\r\nThere's a risk that explicit seeds will be misused. We can add warnings to the text (which readers might miss...), or we can simply write `RandomBytes(32)` when we mean 32 random bytes. After all, it's a spec, not an implementation ;).",
           "createdAt": "2022-08-31T19:24:37Z",
           "updatedAt": "2022-08-31T19:24:37Z"
+        },
+        {
+          "author": "bwesterb",
+          "authorAssociation": "OWNER",
+          "body": "> Other implementations are likely to use NIST's API\r\n\r\nThose that copy the C reference definitely, but the NIST API is very unnatural. In Go, for instance, the idiomatic equivalent would be to pass a `rand io.Reader` parameter which can't emulate the annoying behaviour that RandomBytes(32) + RandomBytes(32) \u2260 RandomBytes(64).\r\n\r\n> obscures the fact that seed must be the concatenation of two sequential RandomBytes(32) calls for the purpose of checking the KATs.\r\n\r\nThat this distinction exists is an argument against using the NIST randombytes API. I think it's better to make checking against the NIST test vectors a bit more difficult. We can also have a separate set of test vectors which are easier to check against (and are tailored with specific corner-cases as far as they exist.)\r\n\r\n> There's a risk that explicit seeds will be misused. \r\n\r\nPeople will use deterministic key generation, which is inconvenient with a RandomBytes style API. I admit I don't see a good reason to pass the seed to encapsulation.",
+          "createdAt": "2022-09-01T12:44:33Z",
+          "updatedAt": "2022-09-01T12:44:33Z"
         }
       ]
+    },
+    {
+      "number": 30,
+      "id": "I_kwDOHnJoss5Q_aSh",
+      "title": "Improve readability of kyber.py",
+      "url": "https://github.com/bwesterb/draft-schwabe-cfrg-kyber/issues/30",
+      "state": "OPEN",
+      "author": "bwesterb",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-09-01T12:52:26Z",
+      "updatedAt": "2022-09-01T12:52:26Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
