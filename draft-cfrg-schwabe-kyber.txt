@@ -96,14 +96,13 @@ Table of Contents
      11.1.  Key generation
      11.2.  Encapsulation
      11.3.  Decapsulation
-     11.4.  Common to all parameter sets
-     11.5.  Parameter sets
-   12. Machine-readable specification
-   13. Security Considerations
-   14. IANA Considerations
-   15. References
-     15.1.  Normative References
-     15.2.  Informative References
+   12. Parameter sets
+   13. Machine-readable specification
+   14. Security Considerations
+   15. IANA Considerations
+   16. References
+     16.1.  Normative References
+     16.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
@@ -140,9 +139,9 @@ Table of Contents
 
    Kyber.CPAPKE is a lattice-based scheme.  More precisely, its security
    is based on the learning-with-errors problem in module lattices
-   (MLWE).  The underlying polynomial ring R (defined in TODO) is chosen
-   such that multiplication is very fast using the number theoretic
-   transform (NTT, see TODO).
+   (MLWE).  The underlying polynomial ring R (defined in Section 5) is
+   chosen such that multiplication is very fast using the number
+   theoretic transform (NTT, see Section 5.1.3).
 
    A Kyber.CPAPKE private key is a vector _s_ over R of length k which
    is _small_ in a particular way.  Here k is a security parameter akin
@@ -298,7 +297,7 @@ Table of Contents
 
    We will not use this schoolbook multiplication to compute the
    product.  Instead we will use the more efficient, number theoretic
-   transform (NTT), see TODO.
+   transform (NTT), see Section 5.1.3.
 
 5.1.2.  Size of polynomials
 
@@ -353,7 +352,7 @@ R = GF(q)[x]/(x^256+1) -> GF(q)[x]/(x^2-zeta) x ... x GF(q)[x]/(x^2+zeta^127)
    given by a |-> ( a mod x^2 - zeta, ..., a mod x^2 + zeta^127 ) is an
    isomorphism.  This is the Number Theoretic Transform (NTT).
    Multiplication on the right is much easier: it's almost
-   componentwise, see section TODO.
+   componentwise, see Section 6.1.
 
    A propos, the the constant factors that appear in the moduli in order
    can be computed efficiently as follows (all modulo q):
@@ -457,7 +456,8 @@ R = GF(q)[x]/(x^256+1) -> GF(q)[x]/(x^2-zeta) x ... x GF(q)[x]/(x^2+zeta^127)
 
    Its inverse is called the InvNTT.
 
-   It can be computed more efficiently as described in section TODO.
+   It can be computed more efficiently as described in section
+   Section 5.1.3.
 
    Examples:
 
@@ -669,7 +669,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
    _d_u_, _d_v_  How many bits to retain per coefficient of the _u_ and
       _v_ components of the ciphertext.
 
-   TODO reference to table with values.
+   The values of these parameters are given in Section 12.
 
 10.2.  Key generation
 
@@ -848,7 +848,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
        1.  sharedSecret = K
 
-11.4.  Common to all parameter sets
+12.  Parameter sets
 
             +======+=======+=================================+
             | Name | Value | Description                     |
@@ -860,7 +860,8 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
             | zeta |   17  | nth root of unity in base field |
             +------+-------+---------------------------------+
 
-                                 Table 1
+              Table 1: Common parameters to all versions of
+                                  Kyber
 
                      +===========+===================+
                      | Primitive | Instantiation     |
@@ -876,9 +877,8 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
                      |       KDF | SHAKE-256         |
                      +-----------+-------------------+
 
-                                  Table 2
-
-11.5.  Parameter sets
+                         Table 2: Instantiation of
+                       symmetric primitives in Kyber
 
     +============+===================================================+
     |       Name | Description                                       |
@@ -895,7 +895,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
     |            | private-key dependent part of the ciphertext.     |
     +------------+---------------------------------------------------+
 
-                                 Table 3
+                 Table 3: Description of kyber parameters
 
            +===============+===+======+======+=====+=====+=====+
            | Parameter set | k | eta1 | eta2 | d_u | d_v | sec |
@@ -907,9 +907,9 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
            |     Kyber1024 | 4 |  2   |  2   |  11 |  5  |  V  |
            +---------------+---+------+------+-----+-----+-----+
 
-                                  Table 4
+                       Table 4: Kyber parameter sets
 
-12.  Machine-readable specification
+13.  Machine-readable specification
 
  # WARNING This is a specification of Kyber; not a production ready
  # implementation. It is slow and does not run in constant time.
@@ -1230,19 +1230,17 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
          KDF(z + H(ct)),      # if ct != ct2
      )
 
-           Figure 1: Machine-readable specification of Kyber
-
-13.  Security Considerations
+14.  Security Considerations
 
    TODO Security (#18)
 
-14.  IANA Considerations
+15.  IANA Considerations
 
    TODO (#17)
 
-15.  References
+16.  References
 
-15.1.  Normative References
+16.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1253,7 +1251,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-15.2.  Informative References
+16.2.  Informative References
 
    [KyberV302]
               Avanzi, R., Bos, J., Ducas, L., Kiltz, E., Lepoint, T.,

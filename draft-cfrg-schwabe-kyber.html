@@ -1260,39 +1260,36 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
                 <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="xref">11.3</a>.  <a href="#name-decapsulation" class="xref">Decapsulation</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
-                <p id="section-toc.1-1.11.2.4.1"><a href="#section-11.4" class="xref">11.4</a>.  <a href="#name-common-to-all-parameter-set" class="xref">Common to all parameter sets</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
-                <p id="section-toc.1-1.11.2.5.1"><a href="#section-11.5" class="xref">11.5</a>.  <a href="#name-parameter-sets" class="xref">Parameter sets</a></p>
-</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#section-12" class="xref">12</a>. <a href="#name-machine-readable-specificat" class="xref">Machine-readable specification</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="xref">12</a>. <a href="#name-parameter-sets" class="xref">Parameter sets</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#section-13" class="xref">13</a>. <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="xref">13</a>. <a href="#name-machine-readable-specificat" class="xref">Machine-readable specification</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#section-14" class="xref">14</a>. <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.14.1"><a href="#section-14" class="xref">14</a>. <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#section-15" class="xref">15</a>. <a href="#name-references" class="xref">References</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.1">
-                <p id="section-toc.1-1.15.2.1.1"><a href="#section-15.1" class="xref">15.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="xref">15</a>. <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.2">
-                <p id="section-toc.1-1.15.2.2.1"><a href="#section-15.2" class="xref">15.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
+            <p id="section-toc.1-1.16.1"><a href="#section-16" class="xref">16</a>. <a href="#name-references" class="xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.1">
+                <p id="section-toc.1-1.16.2.1.1"><a href="#section-16.1" class="xref">16.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.2">
+                <p id="section-toc.1-1.16.2.2.1"><a href="#section-16.2" class="xref">16.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
 </li>
             </ul>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
-            <p id="section-toc.1-1.16.1"><a href="#appendix-A" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
-</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
-            <p id="section-toc.1-1.17.1"><a href="#appendix-B" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.17.1"><a href="#appendix-A" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18">
+            <p id="section-toc.1-1.18.1"><a href="#appendix-B" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1346,9 +1343,9 @@ Kyber.CPAPKE   ----------------------&gt;   Kyber
 </div>
 <p id="section-3-3">Kyber.CPAPKE is a lattice-based scheme. More precisely, its security
 is based on the learning-with-errors problem in module lattices (MLWE).
-The underlying polynomial ring R (defined in TODO) is chosen such that
+The underlying polynomial ring R (defined in <a href="#S-ring" class="xref">Section 5</a>) is chosen such that
 multiplication is very fast using the number theoretic transform
-(NTT, see TODO).<a href="#section-3-3" class="pilcrow">¶</a></p>
+(NTT, see <a href="#S-NTT" class="xref">Section 5.1.3</a>).<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">A Kyber.CPAPKE private key is a vector <em>s</em> over R of length k which is
 <em>small</em> in a particular way. Here <code>k</code> is a security parameter akin to the
 size of a prime modulus. For Kyber512, which targets AES-128's security level,
@@ -1486,7 +1483,7 @@ TODO Do we need to define &gt;&gt; and &lt;&lt;?<a href="#section-4.2-11" class=
 </div>
 </section>
 </div>
-<div id="the-ring-r">
+<div id="S-ring">
 <section id="section-5">
       <h2 id="name-the-ring-r">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-the-ring-r" class="section-name selfRef">The ring R</a>
@@ -1534,7 +1531,7 @@ that x^256=-1. To wit<a href="#section-5.1.1-4" class="pilcrow">¶</a></p>
 </div>
 <p id="section-5.1.1-6">We will not use this schoolbook multiplication to compute the product.
 Instead we will use the more efficient, number theoretic transform (NTT),
-see TODO.<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
+see <a href="#S-NTT" class="xref">Section 5.1.3</a>.<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="size-of-polynomials">
@@ -1551,7 +1548,7 @@ see TODO.<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
 <p id="section-5.1.2-3">Thus a polynomial is considered large if one of its components is large.<a href="#section-5.1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="background-on-the-number-theoretic-transform-ntt">
+<div id="S-NTT">
 <section id="section-5.1.3">
           <h4 id="name-background-on-the-number-th">
 <a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-background-on-the-number-th" class="section-name selfRef">Background on the Number Theoretic Transform (NTT)</a>
@@ -1603,7 +1600,7 @@ R = GF(q)[x]/(x^256+1) -&gt; GF(q)[x]/(x^2-zeta) x ... x GF(q)[x]/(x^2+zeta^127)
 </div>
 <p id="section-5.1.3-11">given by a |-&gt; ( a mod x^2 - zeta, ..., a mod x^2 + zeta^127 ) is an isomorphism.
 This is the Number Theoretic Transform (NTT). Multiplication on the right is
-much easier: it's almost componentwise, see section TODO.<a href="#section-5.1.3-11" class="pilcrow">¶</a></p>
+much easier: it's almost componentwise, see <a href="#S-NTT-mul" class="xref">Section 6.1</a>.<a href="#section-5.1.3-11" class="pilcrow">¶</a></p>
 <p id="section-5.1.3-12">A propos, the the constant factors that appear in the moduli in order
 can be computed efficiently as follows (all modulo q):<a href="#section-5.1.3-12" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1.3-13">
@@ -1724,7 +1721,7 @@ and brv(91)=109.<a href="#section-6-2" class="pilcrow">¶</a></p>
 </pre><a href="#section-6-4" class="pilcrow">¶</a>
 </div>
 <p id="section-6-5">Its inverse is called the InvNTT.<a href="#section-6-5" class="pilcrow">¶</a></p>
-<p id="section-6-6">It can be computed more efficiently as described in section TODO.<a href="#section-6-6" class="pilcrow">¶</a></p>
+<p id="section-6-6">It can be computed more efficiently as described in section <a href="#S-NTT" class="xref">Section 5.1.3</a>.<a href="#section-6-6" class="pilcrow">¶</a></p>
 <p id="section-6-7">Examples:<a href="#section-6-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6-8">
 <pre>
@@ -1732,7 +1729,7 @@ NTT(1, 1, 0, ..., 0)   = (1, 1, ..., 1, 1)
 NTT(1, 2, 3, ..., 255) = (2429, 2845, 425, 1865, ..., 2502, 2134, 2717, 2303)
 </pre><a href="#section-6-8" class="pilcrow">¶</a>
 </div>
-<div id="multiplication-in-ntt-domain">
+<div id="S-NTT-mul">
 <section id="section-6.1">
         <h3 id="name-multiplication-in-ntt-domai">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-multiplication-in-ntt-domai" class="section-name selfRef">Multiplication in NTT domain</a>
@@ -2062,7 +2059,7 @@ of the ciphertext.<a href="#section-10.1-4.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-10.1-5">TODO reference to table with values.<a href="#section-10.1-5" class="pilcrow">¶</a></p>
+<p id="section-10.1-5">The values of these parameters are given in <a href="#S-params" class="xref">Section 12</a>.<a href="#section-10.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="key-generation">
@@ -2335,158 +2332,169 @@ returns a shared secret as follows.<a href="#section-11.3-1" class="pilcrow">¶<
         </ol>
 </section>
 </div>
-<div id="common-to-all-parameter-sets">
-<section id="section-11.4">
-        <h3 id="name-common-to-all-parameter-set">
-<a href="#section-11.4" class="section-number selfRef">11.4. </a><a href="#name-common-to-all-parameter-set" class="section-name selfRef">Common to all parameter sets</a>
-        </h3>
-<table class="center" id="table-1">
-          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
-<thead>
-            <tr>
-              <th class="text-right" rowspan="1" colspan="1">Name</th>
-              <th class="text-center" rowspan="1" colspan="1">Value</th>
-              <th class="text-left" rowspan="1" colspan="1">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">q</td>
-              <td class="text-center" rowspan="1" colspan="1">3329</td>
-              <td class="text-left" rowspan="1" colspan="1">Order of base field</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">n</td>
-              <td class="text-center" rowspan="1" colspan="1">256</td>
-              <td class="text-left" rowspan="1" colspan="1">Degree of polynomials</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">zeta</td>
-              <td class="text-center" rowspan="1" colspan="1">17</td>
-              <td class="text-left" rowspan="1" colspan="1">nth root of unity in base field</td>
-            </tr>
-          </tbody>
-        </table>
-<table class="center" id="table-2">
-          <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
-<thead>
-            <tr>
-              <th class="text-right" rowspan="1" colspan="1">Primitive</th>
-              <th class="text-left" rowspan="1" colspan="1">Instantiation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">XOF</td>
-              <td class="text-left" rowspan="1" colspan="1">SHAKE-128</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">H</td>
-              <td class="text-left" rowspan="1" colspan="1">SHA3-256</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">G</td>
-              <td class="text-left" rowspan="1" colspan="1">SHA3-512</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">PRF(s,b)</td>
-              <td class="text-left" rowspan="1" colspan="1">SHAKE-256(s || b)</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">KDF</td>
-              <td class="text-left" rowspan="1" colspan="1">SHAKE-256</td>
-            </tr>
-          </tbody>
-        </table>
 </section>
 </div>
-<div id="parameter-sets">
-<section id="section-11.5">
-        <h3 id="name-parameter-sets">
-<a href="#section-11.5" class="section-number selfRef">11.5. </a><a href="#name-parameter-sets" class="section-name selfRef">Parameter sets</a>
-        </h3>
-<table class="center" id="table-3">
-          <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
-<thead>
-            <tr>
-              <th class="text-right" rowspan="1" colspan="1">Name</th>
-              <th class="text-left" rowspan="1" colspan="1">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">k</td>
-              <td class="text-left" rowspan="1" colspan="1">Dimension of module</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">eta1, eta2</td>
-              <td class="text-left" rowspan="1" colspan="1">Size of "small" coefficients used in the private key and noise vectors.</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">d_u</td>
-              <td class="text-left" rowspan="1" colspan="1">How many bits to retain per coefficient of <code>u</code>, the private-key independent part of the ciphertext</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">d_v</td>
-              <td class="text-left" rowspan="1" colspan="1">How many bits to retain per coefficient of <code>v</code>, the private-key dependent part of the ciphertext.</td>
-            </tr>
-          </tbody>
-        </table>
-<table class="center" id="table-4">
-          <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
-<thead>
-            <tr>
-              <th class="text-right" rowspan="1" colspan="1">Parameter set</th>
-              <th class="text-center" rowspan="1" colspan="1">k</th>
-              <th class="text-center" rowspan="1" colspan="1">eta1</th>
-              <th class="text-center" rowspan="1" colspan="1">eta2</th>
-              <th class="text-center" rowspan="1" colspan="1">d_u</th>
-              <th class="text-center" rowspan="1" colspan="1">d_v</th>
-              <th class="text-center" rowspan="1" colspan="1">sec</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Kyber512</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">3</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">10</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">I</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Kyber768</td>
-              <td class="text-center" rowspan="1" colspan="1">3</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">10</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">III</td>
-            </tr>
-            <tr>
-              <td class="text-right" rowspan="1" colspan="1">Kyber1024</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">11</td>
-              <td class="text-center" rowspan="1" colspan="1">5</td>
-              <td class="text-center" rowspan="1" colspan="1">V</td>
-            </tr>
-          </tbody>
-        </table>
-</section>
-</div>
-</section>
-</div>
-<div id="machine-readable-specification">
+<div id="S-params">
 <section id="section-12">
-      <h2 id="name-machine-readable-specificat">
-<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-machine-readable-specificat" class="section-name selfRef">Machine-readable specification</a>
+      <h2 id="name-parameter-sets">
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-parameter-sets" class="section-name selfRef">Parameter sets</a>
       </h2>
-<span id="name-machine-readable-specificati"></span><div id="spec">
-<figure id="figure-1">
-        <div class="alignLeft art-text artwork" id="section-12-1.1">
+<span id="name-common-parameters-to-all-ve"></span><div id="params-comm">
+<table class="center" id="table-1">
+        <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-common-parameters-to-all-ve" class="selfRef">Common parameters to all versions of Kyber</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-right" rowspan="1" colspan="1">Name</th>
+            <th class="text-center" rowspan="1" colspan="1">Value</th>
+            <th class="text-left" rowspan="1" colspan="1">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">q</td>
+            <td class="text-center" rowspan="1" colspan="1">3329</td>
+            <td class="text-left" rowspan="1" colspan="1">Order of base field</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">n</td>
+            <td class="text-center" rowspan="1" colspan="1">256</td>
+            <td class="text-left" rowspan="1" colspan="1">Degree of polynomials</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">zeta</td>
+            <td class="text-center" rowspan="1" colspan="1">17</td>
+            <td class="text-left" rowspan="1" colspan="1">nth root of unity in base field</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+<span id="name-instantiation-of-symmetric-"></span><div id="params-symm">
+<table class="center" id="table-2">
+        <caption>
+<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#name-instantiation-of-symmetric-" class="selfRef">Instantiation of symmetric primitives in Kyber</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-right" rowspan="1" colspan="1">Primitive</th>
+            <th class="text-left" rowspan="1" colspan="1">Instantiation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">XOF</td>
+            <td class="text-left" rowspan="1" colspan="1">SHAKE-128</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">H</td>
+            <td class="text-left" rowspan="1" colspan="1">SHA3-256</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">G</td>
+            <td class="text-left" rowspan="1" colspan="1">SHA3-512</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">PRF(s,b)</td>
+            <td class="text-left" rowspan="1" colspan="1">SHAKE-256(s || b)</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">KDF</td>
+            <td class="text-left" rowspan="1" colspan="1">SHAKE-256</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+<span id="name-description-of-kyber-parame"></span><div id="params-desc">
+<table class="center" id="table-3">
+        <caption>
+<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#name-description-of-kyber-parame" class="selfRef">Description of kyber parameters</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-right" rowspan="1" colspan="1">Name</th>
+            <th class="text-left" rowspan="1" colspan="1">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">k</td>
+            <td class="text-left" rowspan="1" colspan="1">Dimension of module</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">eta1, eta2</td>
+            <td class="text-left" rowspan="1" colspan="1">Size of "small" coefficients used in the private key and noise vectors.</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">d_u</td>
+            <td class="text-left" rowspan="1" colspan="1">How many bits to retain per coefficient of <code>u</code>, the private-key independent part of the ciphertext</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">d_v</td>
+            <td class="text-left" rowspan="1" colspan="1">How many bits to retain per coefficient of <code>v</code>, the private-key dependent part of the ciphertext.</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+<span id="name-kyber-parameter-sets"></span><div id="params">
+<table class="center" id="table-4">
+        <caption>
+<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#name-kyber-parameter-sets" class="selfRef">Kyber parameter sets</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-right" rowspan="1" colspan="1">Parameter set</th>
+            <th class="text-center" rowspan="1" colspan="1">k</th>
+            <th class="text-center" rowspan="1" colspan="1">eta1</th>
+            <th class="text-center" rowspan="1" colspan="1">eta2</th>
+            <th class="text-center" rowspan="1" colspan="1">d_u</th>
+            <th class="text-center" rowspan="1" colspan="1">d_v</th>
+            <th class="text-center" rowspan="1" colspan="1">sec</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">Kyber512</td>
+            <td class="text-center" rowspan="1" colspan="1">2</td>
+            <td class="text-center" rowspan="1" colspan="1">3</td>
+            <td class="text-center" rowspan="1" colspan="1">2</td>
+            <td class="text-center" rowspan="1" colspan="1">10</td>
+            <td class="text-center" rowspan="1" colspan="1">4</td>
+            <td class="text-center" rowspan="1" colspan="1">I</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">Kyber768</td>
+            <td class="text-center" rowspan="1" colspan="1">3</td>
+            <td class="text-center" rowspan="1" colspan="1">2</td>
+            <td class="text-center" rowspan="1" colspan="1">2</td>
+            <td class="text-center" rowspan="1" colspan="1">10</td>
+            <td class="text-center" rowspan="1" colspan="1">4</td>
+            <td class="text-center" rowspan="1" colspan="1">III</td>
+          </tr>
+          <tr>
+            <td class="text-right" rowspan="1" colspan="1">Kyber1024</td>
+            <td class="text-center" rowspan="1" colspan="1">4</td>
+            <td class="text-center" rowspan="1" colspan="1">2</td>
+            <td class="text-center" rowspan="1" colspan="1">2</td>
+            <td class="text-center" rowspan="1" colspan="1">11</td>
+            <td class="text-center" rowspan="1" colspan="1">5</td>
+            <td class="text-center" rowspan="1" colspan="1">V</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+</section>
+</div>
+<div id="S-spec">
+<section id="section-13">
+      <h2 id="name-machine-readable-specificat">
+<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-machine-readable-specificat" class="section-name selfRef">Machine-readable specification</a>
+      </h2>
+<div class="alignLeft art-text artwork" id="section-13-1">
 <pre>
 # WARNING This is a specification of Kyber; not a production ready
 # implementation. It is slow and does not run in constant time.
@@ -2806,37 +2814,33 @@ def Dec(sk, ct, params):
         KDF(Kbar2 + H(ct)),  # if ct == ct2
         KDF(z + H(ct)),      # if ct != ct2
     )
-</pre>
-</div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-machine-readable-specificati" class="selfRef">Machine-readable specification of Kyber</a>
-        </figcaption></figure>
+</pre><a href="#section-13-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-13">
+<section id="section-14">
       <h2 id="name-security-considerations">
-<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-13-1">TODO Security (#18)<a href="#section-13-1" class="pilcrow">¶</a></p>
+<p id="section-14-1">TODO Security (#18)<a href="#section-14-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-14">
+<section id="section-15">
       <h2 id="name-iana-considerations">
-<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-14-1">TODO (#17)<a href="#section-14-1" class="pilcrow">¶</a></p>
+<p id="section-15-1">TODO (#17)<a href="#section-15-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<section id="section-15">
+<section id="section-16">
       <h2 id="name-references">
-<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-16" class="section-number selfRef">16. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
-<section id="section-15.1">
+<section id="section-16.1">
         <h3 id="name-normative-references">
-<a href="#section-15.1" class="section-number selfRef">15.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-16.1" class="section-number selfRef">16.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
@@ -2849,9 +2853,9 @@ def Dec(sk, ct, params):
 <dd class="break"></dd>
 </dl>
 </section>
-<section id="section-15.2">
+<section id="section-16.2">
         <h3 id="name-informative-references">
-<a href="#section-15.2" class="section-number selfRef">15.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-16.2" class="section-number selfRef">16.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="KyberV302">[KyberV302]</dt>
