@@ -1042,7 +1042,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwabe &amp; Westerbaan</td>
-<td class="center">Expires 5 March 2023</td>
+<td class="center">Expires 11 March 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1055,12 +1055,12 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-cfrg-schwabe-kyber-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-09-01" class="published">1 September 2022</time>
+<time datetime="2022-09-07" class="published">7 September 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-03-05">5 March 2023</time></dd>
+<dd class="expires"><time datetime="2023-03-11">11 March 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1109,7 +1109,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 March 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 March 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1269,7 +1269,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#section-12" class="xref">12</a>. <a href="#name-machine-readable-implementa" class="xref">Machine-readable implementation</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="xref">12</a>. <a href="#name-machine-readable-specificat" class="xref">Machine-readable specification</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
             <p id="section-toc.1-1.13.1"><a href="#section-13" class="xref">13</a>. <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
@@ -2479,13 +2479,14 @@ returns a shared secret as follows.<a href="#section-11.3-1" class="pilcrow">¶<
 </div>
 </section>
 </div>
-<div id="machine-readable-implementation">
+<div id="machine-readable-specification">
 <section id="section-12">
-      <h2 id="name-machine-readable-implementa">
-<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-machine-readable-implementa" class="section-name selfRef">Machine-readable implementation</a>
+      <h2 id="name-machine-readable-specificat">
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-machine-readable-specificat" class="section-name selfRef">Machine-readable specification</a>
       </h2>
-<p id="section-12-1">TODO insert kyber.py automatically (#14)<a href="#section-12-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-12-2">
+<span id="name-machine-readable-specificati"></span><div id="spec">
+<figure id="figure-1">
+        <div class="alignLeft art-text artwork" id="section-12-1.1">
 <pre>
 # WARNING This is a specification of Kyber; not a production ready
 # implementation. It is slow and does not run in constant time.
@@ -2655,7 +2656,8 @@ def CBD(a, eta):
 
 def XOF(seed, j, i):
     # TODO #5 proper streaming SHAKE128
-    return io.BytesIO(hashlib.shake_128(seed + bytes([j, i])).digest(length=1344))
+    return io.BytesIO(hashlib.shake_128(seed + bytes([j, i])).digest(
+        length=1344))
 
 def PRF(seed, nonce):
     # TODO #5 proper streaming SHAKE256
@@ -2681,8 +2683,9 @@ class Vec:
         return Vec(p.InvNTT() for p in self.ps)
 
     def DotNTT(self, other):
-        """ Computes the dot product &lt;self, other&gt; in the NTT domain. """
-        return sum((a.MulNTT(b) for a, b in zip(self.ps, other.ps)), Poly())
+        """ Computes the dot product &lt;self, other&gt; in NTT domain. """
+        return sum((a.MulNTT(b) for a, b in zip(self.ps, other.ps)),
+                   Poly())
 
     def __add__(self, other):
         return Vec(a+b for a,b in zip(self.ps, other.ps))
@@ -2719,14 +2722,23 @@ class Matrix:
     def T(self):
         """ Returns transpose of matrix """
         k = len(self.cs)
-        return Matrix((self.cs[j][i] for j in range(k)) for i in range(k))
+        return Matrix((self.cs[j][i] for j in range(k))
+                      for i in range(k))
 
 def sampleMatrix(rho, k):
     return Matrix([[sampleUniform(XOF(rho, j, i))
             for j in range(k)] for i in range(k)])
 
 def sampleNoise(sigma, eta, offset, k):
-    return Vec(CBD(PRF(sigma, i+offset).read(64*eta), eta) for i in range(k))
+    return Vec(CBD(PRF(sigma, i+offset).read(64*eta), eta)
+               for i in range(k))
+
+def constantTimeSelectOnEquality(a, b, ifEq, ifNeq):
+    # WARNING! In production code this must be done in a
+    # data-independent constant-time manner, which this implementation
+    # is not. In fact, many more lines of code in this
+    # file are not constant-time.
+    return ifEq if a == b else ifNew
 
 def CPAPKE_KeyGen(seed, params):
     assert len(seed) == 32
@@ -2751,7 +2763,8 @@ def CPAPKE_Enc(pk, msg, seed, params):
     e2 = sampleNoise(seed, eta2, 2*params.k, 1).ps[0]
     rHat = r.NTT()
     u = A.T().MulNTT(rHat).InvNTT() + e1
-    v = tHat.DotNTT(rHat).InvNTT() + e2 + Poly(Decode(msg, 1)).Decompress(1)
+    m = Poly(Decode(msg, 1)).Decompress(1)
+    v = tHat.DotNTT(rHat).InvNTT() + e2 + m
     c1 = u.Compress(params.du).Encode(params.du)
     c2 = v.Compress(params.dv).Encode(params.dv)
     return c1 + c2
@@ -2788,10 +2801,16 @@ def Dec(sk, ct, params):
     m2 = CPAPKE_Dec(sk, ct, params)
     Kbar2, r2 = G(m2 + h)
     ct2 = CPAPKE_Enc(pk, m2, r2, params)
-    if ct == ct2: # NOTE &lt;- in production this must be done in constant time!
-        return KDF(Kbar2 + H(ct))
-    return KDF(z + H(ct))
-</pre><a href="#section-12-2" class="pilcrow">¶</a>
+    return constantTimeSelectOnEquality(
+        ct2, ct,
+        KDF(Kbar2 + H(ct)),  # if ct == ct2
+        KDF(z + H(ct)),      # if ct != ct2
+    )
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-machine-readable-specificati" class="selfRef">Machine-readable specification of Kyber</a>
+        </figcaption></figure>
 </div>
 </section>
 </div>
