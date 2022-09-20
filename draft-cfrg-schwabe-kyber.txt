@@ -87,7 +87,7 @@ Table of Contents
      9.3.  Sampling of polynomials
        9.3.1.  Uniformly
        9.3.2.  From a binomial distribution
-   10. Kyber.CPAPKE
+   10. Inner malleable public-key encryption scheme
      10.1.  Parameters
      10.2.  Key generation
      10.3.  Encryption
@@ -129,24 +129,24 @@ Table of Contents
 3.  Overview
 
    Kyber is an IND-CCA2 secure KEM.  It is constructed by applying a
-   Fujisaki--Okamato style transformation on Kyber.CPAPKE, which is the
+   Fujisaki--Okamato style transformation on InnerPKE, which is the
    underlying IND-CPA secure Public Key Encryption scheme.  We cannot
-   use Kyber.CPAPKE directly, as its ciphertexts are malleable.
+   use InnerPKE directly, as its ciphertexts are malleable.
 
                       F.O. transform
-   Kyber.CPAPKE   ---------------------->   Kyber
+      InnerPKE   ---------------------->   Kyber
       IND-CPA                              IND-CCA2
 
-   Kyber.CPAPKE is a lattice-based scheme.  More precisely, its security
-   is based on the learning-with-errors problem in module lattices
-   (MLWE).  The underlying polynomial ring R (defined in Section 5) is
-   chosen such that multiplication is very fast using the number
-   theoretic transform (NTT, see Section 5.1.3).
+   Kyber is a lattice-based scheme.  More precisely, its security is
+   based on the learning-with-errors problem in module lattices (MLWE).
+   The underlying polynomial ring R (defined in Section 5) is chosen
+   such that multiplication is very fast using the number theoretic
+   transform (NTT, see Section 5.1.3).
 
-   A Kyber.CPAPKE private key is a vector _s_ over R of length k which
-   is _small_ in a particular way.  Here k is a security parameter akin
-   to the size of a prime modulus.  For Kyber512, which targets AES-
-   128's security level, the value of k is 2.
+   An InnerPKE private key is a vector _s_ over R of length k which is
+   _small_ in a particular way.  Here k is a security parameter akin to
+   the size of a prime modulus.  For Kyber512, which targets AES-128's
+   security level, the value of k is 2.
 
    The public key consists of two values:
 
@@ -186,8 +186,8 @@ Table of Contents
    of coefficients for our polynomial ring; what it means to be small;
    and how to compress.  Then we define the polynomial ring R; its
    operations and in particular the NTT.  We continue with the different
-   methods of sampling and (de)serialization.  Then, we define first
-   Kyber.CPAPKE and finally Kyber proper.
+   methods of sampling and (de)serialization.  Then, we first define
+   InnerPKE and finally Kyber proper.
 
 4.  The field GF(q)
 
@@ -520,8 +520,6 @@ NTT(1, 2, 3, ..., 255) = (2429, 2845, 425, 1865, ..., 2502, 2134, 2717, 2303)
 
 9.  Serialization
 
-   TODO #20
-
 9.1.  OctetsToBits
 
    For any list of octets a_0, ..., a_{s-1}, we define OctetsToBits(a),
@@ -531,7 +529,7 @@ NTT(1, 2, 3, ..., 255) = (2429, 2845, 425, 1865, ..., 2502, 2134, 2717, 2303)
 
    Example:
 
-  OctetsToBits(12,34) = (0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0)
+  OctetsToBits(12,45) = (0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0)
 
 9.2.  Encode and Decode
 
@@ -639,12 +637,13 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
    Recall that we start counting vector indices at zero.
 
-10.  Kyber.CPAPKE
+10.  Inner malleable public-key encryption scheme
 
    We are ready to define the IND-CPA secure Public-Key Encryption
-   scheme that underlies Kyber.
-
-   TODO warning about using Kyber.CPAPKE directly (#21)
+   scheme that underlies Kyber.  It is unsafe to use this underlying
+   scheme directly as its ciphertexts are malleable.  Instead, a Public-
+   Key Encryption scheme can be constructed on top of Kyber by using
+   HPKE [RFC9180].
 
 10.1.  Parameters
 
@@ -673,8 +672,8 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
 10.2.  Key generation
 
-   Kyber.CPAPKE.KeyGen(seed) takes a 32 octet *seed* and
-   deterministically produces a keypair as follows.
+   InnerKeyGen(seed) takes a 32 octet *seed* and deterministically
+   produces a keypair as follows.
 
    1.  Set (rho, sigma) = G(seed).
 
@@ -702,9 +701,9 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
 10.3.  Encryption
 
-   Kyber.CPAPKE.Enc(msg, publicKey, seed) takes a 32-octet seed, and
-   deterministically encrypts the 32-octet msg for the Kyber.CPAPKE
-   public key publicKey as follows.
+   InnerEnc(msg, publicKey, seed) takes a 32-octet seed, and
+   deterministically encrypts the 32-octet msg for the InnerPKE public
+   key publicKey as follows.
 
    1.  Split publicKey into
 
@@ -742,8 +741,8 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
 10.4.  Decryption
 
-   Kyber.CPAPKE.Dec(cipherText, privateKey) takes a Kyber.CPAPKE private
-   key privateKey and decrypts a cipher text cipherText as follows.
+   InnerDec(cipherText, privateKey) takes an InnerPKE private key
+   privateKey and decrypts a cipher text cipherText as follows.
 
    1.  Split cipherText into
 
@@ -784,7 +783,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
    2.  Compute
 
-       1.  (cpaPublicKey, cpaPrivateKey) = Kyber.CPAPKE.KeyGen(cpaSeed)
+       1.  (cpaPublicKey, cpaPrivateKey) = InnerKeyGen(cpaSeed)
 
        2.  h = H(cpaPublicKey)
 
@@ -806,7 +805,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
        2.  (Kbar, cpaSeed) = G(m || H(pk))
 
-       3.  cpaCipherText = Kyber.CPAPKE.Enc(m, publicKey, cpaSeed)
+       3.  cpaCipherText = InnerEnc(m, publicKey, cpaSeed)
 
    2.  Return
 
@@ -831,11 +830,11 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
    2.  Compute
 
-       1.  m2 = Kyber.CPAPKE.Dec(cipherText, cpaPrivateKey)
+       1.  m2 = InnerDec(cipherText, cpaPrivateKey)
 
        2.  (KBar2, cpaSeed2) = G(m2 || h)
 
-       3.  cipherText2 = Kyber.CPAPKE.Enc(m2, cpaPublicKey, cpaSeed2)
+       3.  cipherText2 = InnerEnc(m2, cpaPublicKey, cpaSeed2)
 
        4.  K1 = KDF(KBar2 || H(cipherText))
 
@@ -1163,7 +1162,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
      # file are not constant-time.
      return ifEq if a == b else ifNew
 
- def CPAPKE_KeyGen(seed, params):
+ def InnerKeyGen(seed, params):
      assert len(seed) == 32
      rho, sigma = G(seed)
      A = sampleMatrix(rho, params.k)
@@ -1176,7 +1175,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
      sk = EncodeVec(sHat, 12)
      return (pk, sk)
 
- def CPAPKE_Enc(pk, msg, seed, params):
+ def InnerEnc(pk, msg, seed, params):
      assert len(msg) == 32
      tHat = DecodeVec(pk[:-32], params.k, 12)
      rho = pk[-32:]
@@ -1192,7 +1191,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
      c2 = v.Compress(params.dv).Encode(params.dv)
      return c1 + c2
 
- def CPAPKE_Dec(sk, ct, params):
+ def InnerDec(sk, ct, params):
      split = params.du * params.k * n // 8
      c1, c2 = ct[:split], ct[split:]
      u = DecodeVec(c1, params.k, params.du).Decompress(params.du)
@@ -1203,7 +1202,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
  def KeyGen(seed, params):
      assert len(seed) == 64
      z = seed[32:]
-     pk, sk2 = CPAPKE_KeyGen(seed[:32], params)
+     pk, sk2 = InnerKeyGen(seed[:32], params)
      h = H(pk)
      return (pk, sk2 + pk + h + z)
 
@@ -1212,7 +1211,7 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
      m = H(seed)
      Kbar, r = G(m + H(pk))
-     ct = CPAPKE_Enc(pk, m, r, params)
+     ct = InnerEnc(pk, m, r, params)
      K = KDF(Kbar + H(ct))
      return (ct, K)
 
@@ -1221,9 +1220,9 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
      pk = sk[12 * params.k * n//8 : 24 * params.k * n//8 + 32]
      h = sk[24 * params.k * n//8 + 32 : 24 * params.k * n//8 + 64]
      z = sk[24 * params.k * n//8 + 64 : 24 * params.k * n//8 + 96]
-     m2 = CPAPKE_Dec(sk, ct, params)
+     m2 = InnerDec(sk, ct, params)
      Kbar2, r2 = G(m2 + h)
-     ct2 = CPAPKE_Enc(pk, m2, r2, params)
+     ct2 = InnerEnc(pk, m2, r2, params)
      return constantTimeSelectOnEquality(
          ct2, ct,
          KDF(Kbar2 + H(ct)),  # if ct == ct2
@@ -1260,6 +1259,10 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
               And Supporting Documentation (version 3.02)", 2021,
               <https://pq-crystals.org/kyber/data/kyber-specification-
               round3-20210804.pdf>.
+
+   [RFC9180]  Barnes, R., Bhargavan, K., Lipp, B., and C. Wood, "Hybrid
+              Public Key Encryption", RFC 9180, DOI 10.17487/RFC9180,
+              February 2022, <https://www.rfc-editor.org/rfc/rfc9180>.
 
    [SecEst]   Ducas, L. and J. Schanck, "CRYSTALS security estimate
               scripts", n.d.,

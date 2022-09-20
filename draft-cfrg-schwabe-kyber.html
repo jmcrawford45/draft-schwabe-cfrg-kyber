@@ -1232,7 +1232,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-kybercpapke" class="xref">Kyber.CPAPKE</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-inner-malleable-public-key-" class="xref">Inner malleable public-key encryption scheme</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
                 <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="xref">10.1</a>.  <a href="#name-parameters" class="xref">Parameters</a></p>
@@ -1331,22 +1331,22 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-overview" class="section-name selfRef">Overview</a>
       </h2>
 <p id="section-3-1">Kyber is an IND-CCA2 secure KEM. It is constructed by applying a
-Fujisaki--Okamato style transformation on Kyber.CPAPKE, which is
+Fujisaki--Okamato style transformation on InnerPKE, which is
 the underlying IND-CPA secure Public Key Encryption scheme.
-We cannot use Kyber.CPAPKE directly, as its ciphertexts are malleable.<a href="#section-3-1" class="pilcrow">¶</a></p>
+We cannot use InnerPKE directly, as its ciphertexts are malleable.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3-2">
 <pre>
                    F.O. transform
-Kyber.CPAPKE   ----------------------&gt;   Kyber
+   InnerPKE   ----------------------&gt;   Kyber
    IND-CPA                              IND-CCA2
 </pre><a href="#section-3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-3-3">Kyber.CPAPKE is a lattice-based scheme. More precisely, its security
+<p id="section-3-3">Kyber is a lattice-based scheme. More precisely, its security
 is based on the learning-with-errors problem in module lattices (MLWE).
 The underlying polynomial ring R (defined in <a href="#S-ring" class="xref">Section 5</a>) is chosen such that
 multiplication is very fast using the number theoretic transform
 (NTT, see <a href="#S-NTT" class="xref">Section 5.1.3</a>).<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">A Kyber.CPAPKE private key is a vector <em>s</em> over R of length k which is
+<p id="section-3-4">An InnerPKE private key is a vector <em>s</em> over R of length k which is
 <em>small</em> in a particular way. Here <code>k</code> is a security parameter akin to the
 size of a prime modulus. For Kyber512, which targets AES-128's security level,
 the value of k is 2.<a href="#section-3-4" class="pilcrow">¶</a></p>
@@ -1392,7 +1392,7 @@ m = Compress(Decompress(c_2, d_v) - s^T Decompress(c_1, d_u), 1).
 of coefficients for our polynomial ring; what it means to be small;
 and how to compress. Then we define the polynomial ring R; its operations
 and in particular the NTT. We continue with the different methods of
-sampling and (de)serialization. Then, we define first Kyber.CPAPKE
+sampling and (de)serialization. Then, we first define InnerPKE
 and finally Kyber proper.<a href="#section-3-16" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1821,7 +1821,6 @@ Compress(v, d)_i = Compress(v_i, d)
       <h2 id="name-serialization">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-serialization" class="section-name selfRef">Serialization</a>
       </h2>
-<p id="section-9-1">TODO #20<a href="#section-9-1" class="pilcrow">¶</a></p>
 <div id="octetstobits">
 <section id="section-9.1">
         <h3 id="name-octetstobits">
@@ -1837,7 +1836,7 @@ OctetsToBits(a)_i = ((a_(i&gt;&gt;3)) &gt;&gt; (i umod 8)) umod 2.
 <p id="section-9.1-3">Example:<a href="#section-9.1-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9.1-4">
 <pre>
-OctetsToBits(12,34) = (0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0)
+OctetsToBits(12,45) = (0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0)
 </pre><a href="#section-9.1-4" class="pilcrow">¶</a>
 </div>
 </section>
@@ -1998,14 +1997,15 @@ sampleNoise(sigma, eta, offset)_i = CBD(PRF(sigma, i+offset), eta)
 </div>
 </section>
 </div>
-<div id="kybercpapke">
+<div id="inner-malleable-public-key-encryption-scheme">
 <section id="section-10">
-      <h2 id="name-kybercpapke">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-kybercpapke" class="section-name selfRef">Kyber.CPAPKE</a>
+      <h2 id="name-inner-malleable-public-key-">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-inner-malleable-public-key-" class="section-name selfRef">Inner malleable public-key encryption scheme</a>
       </h2>
 <p id="section-10-1">We are ready to define the IND-CPA secure Public-Key Encryption scheme that
-underlies Kyber.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2">TODO warning about using Kyber.CPAPKE directly (#21)<a href="#section-10-2" class="pilcrow">¶</a></p>
+underlies Kyber. It is unsafe to use this underlying scheme directly as
+its ciphertexts are malleable. Instead, a Public-Key Encryption scheme
+can be constructed on top of Kyber by using HPKE <span>[<a href="#RFC9180" class="xref">RFC9180</a>]</span>.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <div id="parameters">
 <section id="section-10.1">
         <h3 id="name-parameters">
@@ -2067,7 +2067,7 @@ of the ciphertext.<a href="#section-10.1-4.4.1" class="pilcrow">¶</a></p>
         <h3 id="name-key-generation">
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-key-generation" class="section-name selfRef">Key generation</a>
         </h3>
-<p id="section-10.2-1">Kyber.CPAPKE.KeyGen(seed) takes a 32 octet <strong>seed</strong> and deterministically
+<p id="section-10.2-1">InnerKeyGen(seed) takes a 32 octet <strong>seed</strong> and deterministically
 produces a keypair as follows.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-10.2-2">
 <li id="section-10.2-2.1">Set (rho, sigma) = G(seed).<a href="#section-10.2-2.1" class="pilcrow">¶</a>
@@ -2110,8 +2110,8 @@ produces a keypair as follows.<a href="#section-10.2-1" class="pilcrow">¶</a></
         <h3 id="name-encryption">
 <a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-encryption" class="section-name selfRef">Encryption</a>
         </h3>
-<p id="section-10.3-1">Kyber.CPAPKE.Enc(msg, publicKey, seed) takes a 32-octet seed,
-and deterministically encrypts the 32-octet msg for the Kyber.CPAPKE public
+<p id="section-10.3-1">InnerEnc(msg, publicKey, seed) takes a 32-octet seed,
+and deterministically encrypts the 32-octet msg for the InnerPKE public
 key publicKey as follows.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-10.3-2">
 <li id="section-10.3-2.1">
@@ -2168,7 +2168,7 @@ key publicKey as follows.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
         <h3 id="name-decryption">
 <a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-decryption" class="section-name selfRef">Decryption</a>
         </h3>
-<p id="section-10.4-1">Kyber.CPAPKE.Dec(cipherText, privateKey) takes a Kyber.CPAPKE private key
+<p id="section-10.4-1">InnerDec(cipherText, privateKey) takes an InnerPKE private key
 privateKey and decrypts a cipher text cipherText as follows.<a href="#section-10.4-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-10.4-2">
 <li id="section-10.4-2.1">
@@ -2235,7 +2235,7 @@ privateKey and decrypts a cipher text cipherText as follows.<a href="#section-10
           <li id="section-11.1-2.2">
             <p id="section-11.1-2.2.1">Compute<a href="#section-11.1-2.2.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-11.1-2.2.2">
-<li id="section-11.1-2.2.2.1">(cpaPublicKey, cpaPrivateKey) = Kyber.CPAPKE.KeyGen(cpaSeed)<a href="#section-11.1-2.2.2.1" class="pilcrow">¶</a>
+<li id="section-11.1-2.2.2.1">(cpaPublicKey, cpaPrivateKey) = InnerKeyGen(cpaSeed)<a href="#section-11.1-2.2.2.1" class="pilcrow">¶</a>
 </li>
               <li id="section-11.1-2.2.2.2">h = H(cpaPublicKey)<a href="#section-11.1-2.2.2.2" class="pilcrow">¶</a>
 </li>
@@ -2268,7 +2268,7 @@ generates a shared secret and ciphertext for the public key as follows.<a href="
 </li>
               <li id="section-11.2-2.1.2.2">(Kbar, cpaSeed) = G(m || H(pk))<a href="#section-11.2-2.1.2.2" class="pilcrow">¶</a>
 </li>
-              <li id="section-11.2-2.1.2.3">cpaCipherText = Kyber.CPAPKE.Enc(m, publicKey, cpaSeed)<a href="#section-11.2-2.1.2.3" class="pilcrow">¶</a>
+              <li id="section-11.2-2.1.2.3">cpaCipherText = InnerEnc(m, publicKey, cpaSeed)<a href="#section-11.2-2.1.2.3" class="pilcrow">¶</a>
 </li>
             </ol>
 </li>
@@ -2308,11 +2308,11 @@ returns a shared secret as follows.<a href="#section-11.3-1" class="pilcrow">¶<
           <li id="section-11.3-2.2">
             <p id="section-11.3-2.2.1">Compute<a href="#section-11.3-2.2.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-11.3-2.2.2">
-<li id="section-11.3-2.2.2.1">m2 = Kyber.CPAPKE.Dec(cipherText, cpaPrivateKey)<a href="#section-11.3-2.2.2.1" class="pilcrow">¶</a>
+<li id="section-11.3-2.2.2.1">m2 = InnerDec(cipherText, cpaPrivateKey)<a href="#section-11.3-2.2.2.1" class="pilcrow">¶</a>
 </li>
               <li id="section-11.3-2.2.2.2">(KBar2, cpaSeed2) = G(m2 || h)<a href="#section-11.3-2.2.2.2" class="pilcrow">¶</a>
 </li>
-              <li id="section-11.3-2.2.2.3">cipherText2 = Kyber.CPAPKE.Enc(m2, cpaPublicKey, cpaSeed2)<a href="#section-11.3-2.2.2.3" class="pilcrow">¶</a>
+              <li id="section-11.3-2.2.2.3">cipherText2 = InnerEnc(m2, cpaPublicKey, cpaSeed2)<a href="#section-11.3-2.2.2.3" class="pilcrow">¶</a>
 </li>
               <li id="section-11.3-2.2.2.4">K1 = KDF(KBar2 || H(cipherText))<a href="#section-11.3-2.2.2.4" class="pilcrow">¶</a>
 </li>
@@ -2748,7 +2748,7 @@ def constantTimeSelectOnEquality(a, b, ifEq, ifNeq):
     # file are not constant-time.
     return ifEq if a == b else ifNew
 
-def CPAPKE_KeyGen(seed, params):
+def InnerKeyGen(seed, params):
     assert len(seed) == 32
     rho, sigma = G(seed)
     A = sampleMatrix(rho, params.k)
@@ -2761,7 +2761,7 @@ def CPAPKE_KeyGen(seed, params):
     sk = EncodeVec(sHat, 12)
     return (pk, sk)
 
-def CPAPKE_Enc(pk, msg, seed, params):
+def InnerEnc(pk, msg, seed, params):
     assert len(msg) == 32
     tHat = DecodeVec(pk[:-32], params.k, 12)
     rho = pk[-32:]
@@ -2777,7 +2777,7 @@ def CPAPKE_Enc(pk, msg, seed, params):
     c2 = v.Compress(params.dv).Encode(params.dv)
     return c1 + c2
 
-def CPAPKE_Dec(sk, ct, params):
+def InnerDec(sk, ct, params):
     split = params.du * params.k * n // 8
     c1, c2 = ct[:split], ct[split:]
     u = DecodeVec(c1, params.k, params.du).Decompress(params.du)
@@ -2788,7 +2788,7 @@ def CPAPKE_Dec(sk, ct, params):
 def KeyGen(seed, params):
     assert len(seed) == 64
     z = seed[32:]
-    pk, sk2 = CPAPKE_KeyGen(seed[:32], params)
+    pk, sk2 = InnerKeyGen(seed[:32], params)
     h = H(pk)
     return (pk, sk2 + pk + h + z)
 
@@ -2797,7 +2797,7 @@ def Enc(pk, seed, params):
 
     m = H(seed)
     Kbar, r = G(m + H(pk))
-    ct = CPAPKE_Enc(pk, m, r, params)
+    ct = InnerEnc(pk, m, r, params)
     K = KDF(Kbar + H(ct))
     return (ct, K)
 
@@ -2806,9 +2806,9 @@ def Dec(sk, ct, params):
     pk = sk[12 * params.k * n//8 : 24 * params.k * n//8 + 32]
     h = sk[24 * params.k * n//8 + 32 : 24 * params.k * n//8 + 64]
     z = sk[24 * params.k * n//8 + 64 : 24 * params.k * n//8 + 96]
-    m2 = CPAPKE_Dec(sk, ct, params)
+    m2 = InnerDec(sk, ct, params)
     Kbar2, r2 = G(m2 + h)
-    ct2 = CPAPKE_Enc(pk, m2, r2, params)
+    ct2 = InnerEnc(pk, m2, r2, params)
     return constantTimeSelectOnEquality(
         ct2, ct,
         KDF(Kbar2 + H(ct)),  # if ct == ct2
@@ -2861,6 +2861,10 @@ def Dec(sk, ct, params):
 <dt id="KyberV302">[KyberV302]</dt>
         <dd>
 <span class="refAuthor">Avanzi, R.</span>, <span class="refAuthor">Bos, J.</span>, <span class="refAuthor">Ducas, L.</span>, <span class="refAuthor">Kiltz, E.</span>, <span class="refAuthor">Lepoint, T.</span>, <span class="refAuthor">Lyubashevsky, V.</span>, <span class="refAuthor">Schanck, J.</span>, <span class="refAuthor">Schwabe, P.</span>, <span class="refAuthor">Seiler, G.</span>, and <span class="refAuthor">D. Stehle</span>, <span class="refTitle">"CRYSTALS-Kyber, Algorithm Specification And Supporting Documentation (version 3.02)"</span>, <time datetime="2021" class="refDate">2021</time>, <span>&lt;<a href="https://pq-crystals.org/kyber/data/kyber-specification-round3-20210804.pdf">https://pq-crystals.org/kyber/data/kyber-specification-round3-20210804.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9180">[RFC9180]</dt>
+        <dd>
+<span class="refAuthor">Barnes, R.</span>, <span class="refAuthor">Bhargavan, K.</span>, <span class="refAuthor">Lipp, B.</span>, and <span class="refAuthor">C. Wood</span>, <span class="refTitle">"Hybrid Public Key Encryption"</span>, <span class="seriesInfo">RFC 9180</span>, <span class="seriesInfo">DOI 10.17487/RFC9180</span>, <time datetime="2022-02" class="refDate">February 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9180">https://www.rfc-editor.org/rfc/rfc9180</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SecEst">[SecEst]</dt>
       <dd>
