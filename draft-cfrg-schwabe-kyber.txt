@@ -5,8 +5,8 @@
 None                                                          P. Schwabe
 Internet-Draft                              MPI-SPI & Radboud University
 Intended status: Informational                             B. Westerbaan
-Expires: 11 March 2023                                        Cloudflare
-                                                        7 September 2022
+Expires: 24 March 2023                                        Cloudflare
+                                                       20 September 2022
 
 
                          Kyber Post-Quantum KEM
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 March 2023.
+   This Internet-Draft will expire on 24 March 2023.
 
 Copyright Notice
 
@@ -1260,6 +1260,10 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
               And Supporting Documentation (version 3.02)", 2021,
               <https://pq-crystals.org/kyber/data/kyber-specification-
               round3-20210804.pdf>.
+
+   [SecEst]   Ducas, L. and J. Schanck, "CRYSTALS security estimate
+              scripts", n.d.,
+              <https://github.com/pq-crystals/security-estimates>.
 
 Acknowledgments
 
