@@ -1788,7 +1788,7 @@ counting at zero.<a href="#section-6.1.1-2.2.3" class="pilcrow">¶</a></p>
       <h2 id="name-symmetric-cryptographic-pri">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-symmetric-cryptographic-pri" class="section-name selfRef">Symmetric cryptographic primitives</a>
       </h2>
-<p id="section-7-1">Kyber makes use of cryptographic primitives PRF, XOF, KDF, H and G, where<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">Kyber makes use of various symmertic primitives PRF, XOF, KDF, H and G, where<a href="#section-7-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-7-2">
 <pre>
 XOF(seed) = SHAKE-128(seed)
@@ -1798,8 +1798,25 @@ H(msg) = SHA3-256(msg)
 G(msg) = (SHA3-512(msg)[:32], SHA3-512(msg)[32:])
 </pre><a href="#section-7-2" class="pilcrow">¶</a>
 </div>
-<p id="section-7-3">TODO Elaborate on types and usage
-TODO Stick to one?<a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-3">On the surface, they look different, but they are all based on
+the same flexible Keccak XOF that uses the f1600 permutation,
+see <span>[<a href="#fips202" class="xref">fips202</a>]</span>:<a href="#section-7-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7-4">
+<pre>
+XOF(seed)      =  Keccak[256](seed || 1111, .)
+PRF(seed, ctr) =  Keccak[512](seed || ctr || 1111, .)
+KDF(msg)       =  Keccak[512](msg || 1111, 256)
+H(msg)         =  Keccak[512](msg || 01, 256)
+G(msg)         = (Keccak[1024](msg || 01, 512)[:32],
+                  Keccak[1024](msg || 01, 512)[32:])
+
+Keccak[c] = Sponge[Keccak-f[1600], pad10*1, 1600-c]
+</pre><a href="#section-7-4" class="pilcrow">¶</a>
+</div>
+<p id="section-7-5">The reason five different primitives are used is to ensure domain
+separation, which is crucial for security. Additionally, a smaller sponge
+capacity is used for performance where permissable by the
+security requirements.<a href="#section-7-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operations-on-vectors">
@@ -2849,6 +2866,10 @@ def Dec(sk, ct, params):
 <a href="#section-16.1" class="section-number selfRef">16.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="fips202">[fips202]</dt>
+        <dd>
+<span class="refAuthor">National Institute of Standards and Technology</span>, <span class="refTitle">"FIPS PUB 202: SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions"</span>, <span>n.d.</span>, <span>&lt;<a href="https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.202.pdf">https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.202.pdf</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
