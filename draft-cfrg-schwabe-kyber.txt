@@ -5,8 +5,8 @@
 None                                                          P. Schwabe
 Internet-Draft                              MPI-SPI & Radboud University
 Intended status: Informational                             B. Westerbaan
-Expires: 24 March 2023                                        Cloudflare
-                                                       20 September 2022
+Expires: 27 March 2023                                        Cloudflare
+                                                       23 September 2022
 
 
                          Kyber Post-Quantum KEM
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 March 2023.
+   This Internet-Draft will expire on 27 March 2023.
 
 Copyright Notice
 
@@ -144,10 +144,10 @@ Table of Contents
       IND-CPA                              IND-CCA2
 
    Kyber is a lattice-based scheme.  More precisely, its security is
-   based on the learning-with-errors problem in module lattices (MLWE).
-   The underlying polynomial ring R (defined in Section 5) is chosen
-   such that multiplication is very fast using the number theoretic
-   transform (NTT, see Section 5.1.3).
+   based on the learning-with-errors-and-rounding problem in module
+   lattices (MLWER).  The underlying polynomial ring R (defined in
+   Section 5) is chosen such that multiplication is very fast using the
+   number theoretic transform (NTT, see Section 5.1.3).
 
    An InnerPKE private key is a vector _s_ over R of length k which is
    _small_ in a particular way.  Here k is a security parameter akin to
@@ -161,7 +161,9 @@ Table of Contents
    *  _t = A s + e_, where e is a suitably small masking vector.
 
    Distinguishing between such A s + e and a uniformly sampled t is the
-   MLWE problem.
+   module learning-with-errors (MLWE) problem.  If that is hard, then it
+   is also hard to recover the private key from the public key as that
+   would allow you to distinguish between those two.
 
    To save space in the public key, A is recomputed deterministically
    from a seed _rho_.
@@ -182,11 +184,18 @@ Table of Contents
 
    *  d_u, d_v are scheme parameters.
 
-   TODO add a quick rationale.
+   Distinguishing such a ciphertext and uniformly sampled (c_1, c_2) is
+   an example of the full MLWER problem, see section 4.4 of [KyberV302].
 
    To decrypt the ciphertext, one computes
 
    m = Compress(Decompress(c_2, d_v) - s^T Decompress(c_1, d_u), 1).
+
+   It it not straight-forward to see that this formula is correct.  In
+   fact, there is negligable but non-zero probability that a ciphertext
+   does not decrypt correctly given by the DFP column in Table 4.  This
+   failure probability can be computed by a careful automated analysis
+   of the probabilities involved, see kyber_failure.py of [SecEst].
 
    To define all these operations precisely, we first define the field
    of coefficients for our polynomial ring; what it means to be small;
@@ -241,8 +250,8 @@ Table of Contents
    where Round(x) rounds any fraction to the nearest integer going up
    with ties.
 
-   Note that in TODO we define Compress and Decompress for polynomials
-   and vectors.
+   Note that in Section 8 we extend Compress and Decompress to
+   polynomials and vectors.
 
    These two operations have the following properties:
 
@@ -263,9 +272,10 @@ Table of Contents
    Decompress(y, d) = (q*y + (1 << (d-1))) >> d
 
    where Div(x, a) = Floor(x / a).
-
-   TODO Do we want to include the proof that this is correct?  TODO Do
-   we need to define >> and <<?
+   // TODO Do we want to include the proof that this is correct?  Do we
+   // need to define >> and <<?
+   //
+   // -- Bas
 
 5.  The ring R
 
@@ -315,9 +325,6 @@ Table of Contents
    large.
 
 5.1.3.  Background on the Number Theoretic Transform (NTT)
-
-   TODO (#8) This section gives background not necessary for the
-   implementation.  Should we keep it?
 
    The modulus q was chosen such that 256 divides into q-1.  This means
    that there are zeta with
@@ -435,6 +442,10 @@ R = GF(q)[x]/(x^256+1) -> GF(q)[x]/(x^2-zeta) x ... x GF(q)[x]/(x^2+zeta^127)
 
    The inverse NTT can be computed by replacing CS_i by GS_i and
    flipping the diagram horizontally.
+   // TODO (#8) This section gives background not necessary for the
+   // implementation.  Should we keep it?
+   //
+   // -- Bas
 
 5.1.3.1.  Optimization notes
 
@@ -444,8 +455,11 @@ R = GF(q)[x]/(x^256+1) -> GF(q)[x]/(x^2-zeta) x ... x GF(q)[x]/(x^2+zeta^127)
    zeta^-i can be computed as -zeta^(128-i), which allows one to use the
    same precomputed table of powers of zeta for both the NTT and InvNTT.
 
-   TODO Montgomery, Barrett and https://eprint.iacr.org/2020/1377.pdf
-   TODO perhaps move this elsewhere?
+
+   // TODO Add hints on lazy Montgomery reduction?  Including
+   // https://eprint.iacr.org/2020/1377.pdf
+   //
+   // -- Bas
 
 6.  NTT and InvNTT
 
@@ -918,17 +932,18 @@ CBD((0, 1, 2, ..., 191), 3) = (0, 1, 3328, 0, 2, ..., 3328, 3327, 3328, 1)
 
                  Table 3: Description of kyber parameters
 
-           +===============+===+======+======+=====+=====+=====+
-           | Parameter set | k | eta1 | eta2 | d_u | d_v | sec |
-           +===============+===+======+======+=====+=====+=====+
-           |      Kyber512 | 2 |  3   |  2   |  10 |  4  |  I  |
-           +---------------+---+------+------+-----+-----+-----+
-           |      Kyber768 | 3 |  2   |  2   |  10 |  4  | III |
-           +---------------+---+------+------+-----+-----+-----+
-           |     Kyber1024 | 4 |  2   |  2   |  11 |  5  |  V  |
-           +---------------+---+------+------+-----+-----+-----+
+      +===============+===+======+======+=====+=====+=====+========+
+      | Parameter set | k | eta1 | eta2 | d_u | d_v | sec |  DFP   |
+      +===============+===+======+======+=====+=====+=====+========+
+      |      Kyber512 | 2 |  3   |  2   |  10 |  4  |  I  | 2^-139 |
+      +---------------+---+------+------+-----+-----+-----+--------+
+      |      Kyber768 | 3 |  2   |  2   |  10 |  4  | III | 2^-164 |
+      +---------------+---+------+------+-----+-----+-----+--------+
+      |     Kyber1024 | 4 |  2   |  2   |  11 |  5  |  V  | 2^-174 |
+      +---------------+---+------+------+-----+-----+-----+--------+
 
-                       Table 4: Kyber parameter sets
+          Table 4: Kyber parameter sets with NIST security level
+              (sec) and decryption failure probability (DFP)
 
 13.  Machine-readable specification
 
